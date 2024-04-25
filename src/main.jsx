@@ -8,10 +8,10 @@ const theme = createTheme({
   headings: {
     sizes: {
       h1: {
-        fontSize: rem(60)
+        fontSize: rem(40)
       },
       h2: {
-        fontSize: rem(40)
+        fontSize: rem(30)
       }
     }
   },
@@ -21,7 +21,6 @@ const theme = createTheme({
 
 });
 
-console.log(theme);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <MantineProvider theme={theme} defaultColorScheme="dark">

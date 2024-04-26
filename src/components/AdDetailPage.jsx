@@ -9,23 +9,29 @@ export default function AdDetailPage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [ad, setAd] = useState("");
 
+
     useEffect(function() {
-        async function fetchAdByID() {
-          try {
-            setIsLoading(true);
-            setErrorMessage("");
-            const res = await fetch(`http://localhost:7777/api/adverts/65d33d2848bb95dbd2464c57`);
-            if(!res.ok) throw new Error("Etwas ist schiefgelaufen beim Laden des Inserates");
-            const data = await res.json();
-            if(!data.data.ad) throw new Error("Kein Inserat gefunden")
-            setAd(data.data.ad)
-            } catch (err) {
+      const controller = new AbortController();
+      async function fetchAdByID() {
+        try {
+          setIsLoading(true);
+          setErrorMessage("");
+          const res = await fetch(`http://localhost:7777/api/adverts/65d33d2848bb95dbd2464c57`, {signal: controller.signal});
+          if(!res.ok) throw new Error("Etwas ist schiefgelaufen beim Laden der Inserate");
+          const data = await res.json();
+          if(!data.data.ad) throw new Error("Kein Inserat gefunden")
+          setAd(data.data.ad)
+        } catch (err) {
+          if (err.name !== "AbortError") {
+            console.log(err.message);
             setErrorMessage(err.message);
-            } finally {
-            setIsLoading(false);
-            }
+          }
+          
+        } finally {
+          setIsLoading(false);
         }
-        fetchAdByID();
+      }
+      fetchAdByID();
     }, [])
     
     return(

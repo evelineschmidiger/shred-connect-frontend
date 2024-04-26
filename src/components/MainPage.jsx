@@ -5,9 +5,9 @@ import { Center, Divider, NativeSelect, Loader, Text, Box, MultiSelect, Fieldset
 //import { useFetch } from "@mantine/hooks";
 
 
-
 export default function MainPage() {
     const [query, setQuery] = useState("adverts/");
+    //const [queryObj, setQueryObj] = useState({ all: })
     
     return (
         <Container fluid>
@@ -42,26 +42,33 @@ function AdList( {query, setQuery}) {
     const [errorMessage, setErrorMessage] = useState("");
     const [ads, setAds] = useState([]);
     const [adTotal, setAdTotal] = useState(0);
+
+
     
     useEffect(function() {
+        const controller = new AbortController();
         async function fetchAds() {
             try {
                 setIsLoading(true);
                 setErrorMessage("");
-                const res = await fetch(`http://localhost:7777/api/${query}`);
+                const res = await fetch(`http://localhost:7777/api/`, {signal: controller.signal});
                 if(!res.ok) throw new Error("Etwas ist schiefgelaufen beim Laden des Inserates");
                 const data = await res.json();
                 if(!data.data.ads) throw new Error("Keine Inserate gefunden")
                 setAds(data.data.ads);
                 setAdTotal(data.data.lengthWithoutPaginate);
             } catch (err) {
-                setErrorMessage(err.message);
+                if(err.name !== "AbortError") {
+                    console.log(err.message);
+                    setErrorMessage(err.message);
+                }
             } finally {
                 setIsLoading(false);
             }
         }
         fetchAds();
     }, [query])
+
 
     return (
       <Container>
@@ -122,7 +129,7 @@ return (
 )
 }
   
-function AdPagination({query, setQuery, ads, adTotal}) {
+function AdPagination({ setQuery, adTotal}) {
     const [activePage, setPage] = useState(1);
     const adsPerPage = 10;
 

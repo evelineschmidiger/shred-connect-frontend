@@ -1,42 +1,58 @@
+import { BrowserRouter , Route, Routes, Navigate} from "react-router-dom";
+import { AppShell } from '@mantine/core';
+import AdDetailPage from "./pages/AdDetailPage.jsx";
+import UpdateAdPage from "./pages/UpdateAdPage.jsx";
+import MainPage from "./pages/MainPage.jsx";
+import CreateAd from "./components/CreateAd.jsx";
+import UpdateAd from "./components/UpdateAd.jsx";
+import DeleteAd from "./components/DeleteAd.jsx";
+import PageNotFound from "./components/PageNotFound.jsx";
+import Header from "./components/Header.jsx";
 
-import AdDetailPage from "./components/AdDetailPage.jsx";
-import MainPage from "./components/MainPage.jsx"
-import { AppShell,  Flex, Title, Box, Button, Code, Group, LoadingOverlay, Text } from '@mantine/core';
 import "@mantine/core/styles.css";
 import './App.css'
 
 
+
 export default function App() {
   
+  
   return (
-    <>
+    <BrowserRouter>
       <AppShell 
         header={{ height: 180 }}
         padding="md"
       >
 
         <AppShell.Header>
-          <Flex style={{backgroundColor: "var(--mantine-color-blue-9)"}} justify="space-between" align="center">
-
-          <Title order={4}>Home</Title>
-          <Title order={4}>Inserat erstellen oder ändern</Title>
-          </Flex>
-          <Flex style={{padding: "15px"}} justify="space-between" align="center">
-            <div style={{fontSize: "60px"}} className="guitarEmoji">🎸</div>
-            <Flex direction="column" align="center">
-              <Title order={1}>SHRED-CONNECT</Title>
-              <p>Gratis Bandinserate schalten um Musiker für deine Ideen zu finden</p>
-            </Flex>
-            <div style={{fontSize: "60px"}} className="guitarEmoji">🎸</div>
-          </Flex>
+          <Header />
         </AppShell.Header>
 
         <AppShell.Main>
-          <MainPage />
-          {/* <AdDetailPage /> */}
+          <Routes>
+            <Route index path="/" element={<MainPage />} />
+            <Route index path="/ads" element={<MainPage />} />
+            <Route path="ads/:id" element={<AdDetailPage />}></Route>
+            <Route path="update" element={<UpdateAdPage />}>
+              <Route index element={<Navigate replace to="create"/>} />
+              <Route path="create" element={<CreateAd />} />
+              <Route path="update" element={<UpdateAd/>} />
+{/*               <Route path="update" element={<UpdateAd/>} /> */}
+              <Route path="delete" element={<DeleteAd/>} />
+            </Route>
+            
+            {/*
+             /create - route: Redirecting when ad changed or updated to mainpage 
+             / when successfully updated: set state to success = true
+             // false: display error alert
+             <Route path="/redirect" element={success && <Navigate to="/"/>} />
+             */}
+             <Route path="/redirect" element={<Navigate to="/"/>} />
+             <Route path="*" element={<PageNotFound/>}/>
+          </Routes>
         </AppShell.Main>
       </AppShell>
-    </>
+    </BrowserRouter>
   )
 }
 

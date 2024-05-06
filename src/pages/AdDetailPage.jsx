@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import BadgeGroup from './BadgeGroup';
+import { useParams, useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { TextInput, Stack, Loader, Textarea, Fieldset, Button, Flex, Card, Container, Group, Title, Divider } from '@mantine/core';
+import BadgeGroup from '../components/helper/BadgeGroup';
+
 
 
 
@@ -9,6 +12,10 @@ export default function AdDetailPage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [ad, setAd] = useState("");
 
+    const navigate = useNavigate();
+
+    const { id } = useParams();
+
 
     useEffect(function() {
       const controller = new AbortController();
@@ -16,7 +23,7 @@ export default function AdDetailPage() {
         try {
           setIsLoading(true);
           setErrorMessage("");
-          const res = await fetch(`http://localhost:7777/api/adverts/65d33d2848bb95dbd2464c57`, {signal: controller.signal});
+          const res = await fetch(`http://localhost:7777/api/adverts/${id}`, {signal: controller.signal});
           if(!res.ok) throw new Error("Etwas ist schiefgelaufen beim Laden der Inserate");
           const data = await res.json();
           if(!data.data.ad) throw new Error("Kein Inserat gefunden")
@@ -38,17 +45,18 @@ export default function AdDetailPage() {
       <Container>
         <Group justify="center" grow gap="lg">
           {isLoading && <Loader />}
-          {!isLoading && !errorMessage && <AdDetailDisplay ad={ad}/>}
+          {!isLoading && !errorMessage && <AdDetail ad={ad}/>}
           {errorMessage && <Title order={4}>{errorMessage}</Title>}
           <ContactForm />   
         </Group>
 
-        <Button>Zurück</Button>
+        <Button onClick={() => navigate(-1)}>Zurück</Button>
       </Container>
     ) 
   }
 
-function AdDetailDisplay({ ad }) {
+function AdDetail({ ad }) {
+
   return (
     <Card>
       {ad && <Container>

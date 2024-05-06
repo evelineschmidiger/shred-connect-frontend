@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import BadgeGroup from "./BadgeGroup.jsx";
-import {cantons, instruments, styles} from "./../data/data.js";
-import { Center, Divider, NativeSelect, Loader, Text, MultiSelect, Fieldset, Button, Pagination, Image, Badge, Flex, Card, Container, Group, Title } from '@mantine/core';
-//import { useFetch } from "@mantine/hooks";
+import { Link } from 'react-router-dom';
+import { Center, NativeSelect, Loader, Text, MultiSelect, Fieldset, Button, Pagination, Image, Badge, Flex, Card, Container, Group, Title } from '@mantine/core';
+
+import BadgeGroup from "../components/helper/BadgeGroup.jsx";
+import {cantons, instruments, styles} from "../data/data.js";
 
 
 export default function MainPage() {
@@ -27,9 +28,9 @@ export default function MainPage() {
 }
 
 function Filterform({ setFilterQuery}) {
-    const [instrument, setInstrument] = useState("Alle");
+    const [instrument, setInstrument] = useState("Alle Instrumente");
     const [cantonArray, setCantonArray] = useState([]);
-    const [style, setStyle] = useState("");
+    const [style, setStyle] = useState("Alle Stile");
 
 
     // ! empty array is truthy! 
@@ -146,30 +147,33 @@ function Ad({ ad }) {
 return (
     
     <Card style={{width: "200px"}} padding="lg" withBorder>
+        
+            <Card.Section>
+                <Badge color="var(--mantine-color-blue-9)">{ad.canton.charAt(0).toUpperCase() + ad.canton.slice(1)}</Badge>
+                    <Link to={`ads/${ad._id}`}>   
+                        <Image
+                        src="/ana-grave-gHcWaeldgtQ-unsplash.jpg"
+                        height={160}
+                        alt="Live Musician"
+                        />
+                    </Link>
+            </Card.Section>
 
-    <Card.Section>
-    <Badge color="var(--mantine-color-blue-9)">{ad.canton.charAt(0).toUpperCase() + ad.canton.slice(1)}</Badge>
-        <Image
-        src="/src/assets/ana-grave-gHcWaeldgtQ-unsplash.jpg"
-        height={160}
-        alt="Live Musician"
-        />
-    </Card.Section>
+            <Group mt="md" mb="xs">
+                <Title order={4}>{ad.name}</Title>
+            </Group>
+            
+            <Group mt="md" mb="xs">
+                <Title order={5}>Stil</Title>
+                <BadgeGroup array={ad.style} color="var(--mantine-color-blue-9)" key={ad.style}/>
+            </Group>
 
-    <Group mt="md" mb="xs">
-    <Title order={4}>{ad.name}</Title>
-    </Group>
-    
-    <Group mt="md" mb="xs">
-    <Title order={5}>Stil</Title>
-    <BadgeGroup array={ad.style} color="var(--mantine-color-blue-9)" key={ad.style}/>
-    </Group>
-
-    <Group mt="md" mb="xs">
-    <Title order={5}>Instrument</Title>
-    <BadgeGroup array={ad.instrument} color="var(--mantine-color-blue-9)" key={ad.instrument}/>
-    </Group>
+            <Group mt="md" mb="xs">
+                <Title order={5}>Instrument</Title>
+                <BadgeGroup array={ad.instrument} color="var(--mantine-color-blue-9)" key={ad.instrument}/>
+            </Group>
     </Card>
+    
 
 )
 }

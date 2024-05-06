@@ -2,3 +2,8 @@ export const styles = [ "Alle Stile", "alternative", "ambient", "atmospheric", "
 export const instruments = ["Alle Instrumente", "Bass", "Gesang", "Gitarre", "Schlagzeug", "Andere"]
 export const cantons = ["Aargau", "Appenzell Ausserrhoden", "Appenzell Innerrhoden", "Basel-Land", "Basel-Stadt", "Bern", "Freiburg", "Genf", "Glarus", "Graubünden", "Jura", "Luzern", "Neuenburg", "Nidwalden", "Obwalden", "Schaffhausen", "Schwyz", "Solothurn", "St.Gallen", "Tessin", "Thurgau", "Uri", "Waadt", "Wallis", "Zug", "Zürich"]
 
+export const instrumentsAdCreation = [
+    "Akkordeon", "Althorn", "Banjo", "Becken", "Blockflöte", "Bongo", "Cabasa", "Cajón", "Cembalo", "E-Bass", "E-Piano",
+    "Geige", "Gitarre", "Harfe", "Keyboard", "Klarinette", "Klavier", "Leier", "Mandoline", "Melodica", "Metallophon",
+    "Orgel", "Posaune", "Querflöte", "Saxophon", "Schlagzeug", "Synthesizer", "Trommel", "Trompete", "Tuba", "Zimbel", "Zither"
+];

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { Container, SegmentedControl } from '@mantine/core';
+import { Container, Button, SegmentedControl } from '@mantine/core';
 
 
 export default function UpdateAdPage() {
@@ -16,6 +16,7 @@ export default function UpdateAdPage() {
 
     return (
         <Container>
+            
             <h3>Was möchtest du machen?</h3>
             <SegmentedControl
                 value={value}
@@ -28,6 +29,7 @@ export default function UpdateAdPage() {
             />
             <Outlet />
             
+        <Button onClick={() => navigate("/")}>Zurück zur Startseite</Button>
         </Container>
     )
 }

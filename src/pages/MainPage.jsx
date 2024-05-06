@@ -40,7 +40,7 @@ function Filterform({ setFilterQuery}) {
 
     // chain Filterform-Queries, Bsp: instrument=Gesang&canton=Aargau&canton=Bern
     const filterFormQuery = `${instrumentFilterQuery}${(cantonFilterQuery && instrumentFilterQuery) && "&"}${cantonFilterQuery}${(styleFilterQuery && cantonFilterQuery || styleFilterQuery && instrumentFilterQuery) && "&"}${styleFilterQuery}`;
-    console.log("FilterFormQuery:", filterFormQuery);
+    // console.log("FilterFormQuery:", filterFormQuery);
 
     useEffect(function() {
         setFilterQuery(filterFormQuery);
@@ -74,8 +74,6 @@ function Filterform({ setFilterQuery}) {
             data={styles}
             onChange={(event) => setStyle(event.currentTarget.value)}
             />
-
-
         </Fieldset>
         
     )

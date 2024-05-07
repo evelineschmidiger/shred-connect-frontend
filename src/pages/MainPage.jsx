@@ -16,7 +16,6 @@ export default function MainPage() {
     const query = `${paginationQuery}${filterQuery && "&"}${filterQuery}`
     // console.log("Query:", query);
 
-
     
     return (
         <Container fluid>

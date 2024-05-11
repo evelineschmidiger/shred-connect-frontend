@@ -20,8 +20,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <AppShell 
-        header={{ height: 180 }}
-        padding="md"
+        header={{ height: 150 }}
+        padding="lg"
       >
 
         <AppShell.Header>

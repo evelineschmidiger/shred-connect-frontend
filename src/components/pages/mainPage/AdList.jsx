@@ -39,15 +39,15 @@ function AdList( { query, setPaginationQuery, filterQuery }) {
 
 
     return (
-      <Container style={{paddingTop: "40px"}}>
+      <Container style={{paddingTop: "40px"}} fluid>
         <Title order={3}>{adTotal} Inserate</Title>
-        <Container>
+        <Container fluid>
             {isLoading && <Loader />}
             {errorMessage && <Title order={4}>{errorMessage}</Title>}
             {!isLoading && !errorMessage && 
             <Flex
-            mih={20}
-            gap="xs"
+            mih={80}
+            gap="md"
             justify="center"
             align="flex-start"
             direction="row"

@@ -3,7 +3,8 @@
 Use Mantine color variables:  
 Main: dark 5 6 7 8 9
 Second: Blue 9
-color="var(--mantine-color-blue-9)
+Blue5: 339AF0
+color="var(--mantine-color-blue-5)"
 Highlight: Orange 7
 */
 
@@ -18,6 +19,9 @@ Highlight: Orange 7
   box-shadow: "none"
 } */
 
+.m_9e117634 {
+  fill: rgb(208, 236, 29);
+}
 
 
 

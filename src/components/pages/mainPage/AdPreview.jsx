@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Image, Badge, Card, Group, Title } from '@mantine/core';
+import { Image, Stack, Badge, Card, Group, Title, Divider } from '@mantine/core';
 
 import BadgeGroup from "../../helper/BadgeGroup.jsx";
 
@@ -7,7 +7,7 @@ import BadgeGroup from "../../helper/BadgeGroup.jsx";
 function AdPreview({ ad }) {
     return (
         
-        <Card style={{width: "200px"}} padding="lg" withBorder>
+        <Card style={{width: "220px", height: "470px"}} padding="xs" withBorder>
             
                 <Card.Section>
                     <Badge color="var(--mantine-color-blue-9)">{ad.canton.charAt(0).toUpperCase() + ad.canton.slice(1)}</Badge>
@@ -21,18 +21,21 @@ function AdPreview({ ad }) {
                 </Card.Section>
     
                 <Group mt="md" mb="xs">
-                    <Title order={4}>{ad.name}</Title>
+                    <Title order={5} style={{fontSize: "1rem"}}>{ad.name}</Title>
                 </Group>
-                
-                <Group mt="md" mb="xs">
-                    <Title order={5}>Stil</Title>
+
+                <Divider size="xs" label="Stil" labelPosition="left" />
+                <Stack mt="md" mb="xs">
+                    {/* <Title order={6}>Stil</Title> */}
                     <BadgeGroup array={ad.style} color="var(--mantine-color-blue-9)" key={ad.style}/>
-                </Group>
+                </Stack>
+
+                <Divider size="xs" label="Instrument" labelPosition="left" />
     
-                <Group mt="md" mb="xs">
-                    <Title order={5}>Instrument</Title>
+                <Stack mt="md" mb="xs">
+                    {/* <Title order={6}>Instrument</Title> */}
                     <BadgeGroup array={ad.instrument} color="var(--mantine-color-blue-9)" key={ad.instrument}/>
-                </Group>
+                </Stack>
         </Card>
     
     )

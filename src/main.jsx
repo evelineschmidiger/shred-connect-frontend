@@ -5,6 +5,7 @@ import { createTheme, MantineProvider, rem } from '@mantine/core';
 import "@mantine/core/styles.css";
 
 const theme = createTheme({
+  // scale: 0.9,
   headings: {
     sizes: {
       h1: {
@@ -15,6 +16,7 @@ const theme = createTheme({
       }
     }
   },
+  // fontFamily: string;
   // default border radius
   defaultRadius: 'sm'
 /* styles to overwrite */

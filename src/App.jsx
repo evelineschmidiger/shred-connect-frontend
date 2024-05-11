@@ -8,6 +8,7 @@ import UpdateAd from "./components/UpdateAd.jsx";
 import DeleteAd from "./components/DeleteAd.jsx";
 import PageNotFound from "./components/PageNotFound.jsx";
 import Header from "./components/Header.jsx";
+import Navigation from "./components/Navigation.jsx";
 
 import "@mantine/core/styles.css";
 import './App.css'
@@ -15,7 +16,6 @@ import './App.css'
 
 
 export default function App() {
-  
   
   return (
     <BrowserRouter>
@@ -25,6 +25,7 @@ export default function App() {
       >
 
         <AppShell.Header>
+          <Navigation />
           <Header />
         </AppShell.Header>
 

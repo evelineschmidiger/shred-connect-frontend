@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Center, NativeSelect, Loader, Text, MultiSelect, Fieldset, Button, Pagination, Image, Badge, Flex, Card, Container, Group, Title } from '@mantine/core';
+import { Center, NativeSelect, Loader, Text, MultiSelect, Fieldset, Pagination, Image, Badge, Flex, Card, Container, Group, Title } from '@mantine/core';
 
 import BadgeGroup from "../components/helper/BadgeGroup.jsx";
 import {cantons, instruments, styles} from "../data/data.js";
@@ -22,7 +22,6 @@ export default function MainPage() {
             <AdList query={query} filterQuery={filterQuery} setPaginationQuery={setPaginationQuery}/>
         </Container> 
     )
-
 }
 
 function Filterform({ setFilterQuery}) {
@@ -72,8 +71,7 @@ function Filterform({ setFilterQuery}) {
             data={styles}
             onChange={(event) => setStyle(event.currentTarget.value)}
             />
-        </Fieldset>
-        
+        </Fieldset>  
     )
     }
     
@@ -169,7 +167,6 @@ return (
                 <BadgeGroup array={ad.instrument} color="var(--mantine-color-blue-9)" key={ad.instrument}/>
             </Group>
     </Card>
-    
 
 )
 }
@@ -177,6 +174,7 @@ return (
 function AdPagination({ setPaginationQuery, adTotal, filterQuery}) {
     const [activePage, setActivePage] = useState(1);
     const adsPerPage = 10;
+    const hasOnlyOnePage = adTotal <= adsPerPage;
 
     useEffect(() => {
         const query = `limit=${adsPerPage}&page=${activePage}`
@@ -189,5 +187,5 @@ function AdPagination({ setPaginationQuery, adTotal, filterQuery}) {
     }, [filterQuery])
 
 
-    return <Pagination total={Math.ceil(adTotal / adsPerPage)} value={activePage} onChange={setActivePage}/>;
+    return (!hasOnlyOnePage && <Pagination total={Math.ceil(adTotal / adsPerPage)} value={activePage} onChange={setActivePage}/>);
 }

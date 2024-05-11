@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import { TextInput, Stack, Loader, Textarea, Fieldset, Button, Flex, Card, Container, Group, Title, Divider } from '@mantine/core';
-import BadgeGroup from '../components/helper/BadgeGroup';
+import BadgeGroup from '../../helper/BadgeGroup';
 
 
 

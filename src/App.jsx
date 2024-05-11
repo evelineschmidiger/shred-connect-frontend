@@ -1,11 +1,11 @@
 import { BrowserRouter , Route, Routes, Navigate} from "react-router-dom";
 import { AppShell } from '@mantine/core';
-import AdDetailPage from "./pages/AdDetailPage.jsx";
-import UpdateAdPage from "./pages/UpdateAdPage.jsx";
-import MainPage from "./pages/MainPage.jsx";
-import CreateAd from "./components/CreateAd.jsx";
-import UpdateAd from "./components/UpdateAd.jsx";
-import DeleteAd from "./components/DeleteAd.jsx";
+import AdDetailPage from "./components/pages/adDetailPage/AdDetailPage.jsx";
+import UpdateAdPage from "./components/pages/updateAdPage/UpdateAdPage.jsx";
+import MainPage from "./components/pages/mainPage/MainPage.jsx";
+import CreateAd from "./components/pages/updateAdPage/CreateAd.jsx";
+import UpdateAd from "./components/pages/updateAdPage/UpdateAd.jsx";
+import DeleteAd from "./components/pages/updateAdPage/DeleteAd.jsx";
 import PageNotFound from "./components/PageNotFound.jsx";
 import Header from "./components/Header.jsx";
 import Navigation from "./components/Navigation.jsx";

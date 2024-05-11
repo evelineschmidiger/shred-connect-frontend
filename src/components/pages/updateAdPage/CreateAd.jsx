@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { TextInput, MultiSelect, NativeSelect, Fieldset, Button, Group, Textarea } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
-import {cantons, instrumentsAdCreation as instruments, styles} from "../data/data.js";
+import {cantons, instrumentsAdCreation as instruments, styles} from "../../../data/data.js";
 
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);

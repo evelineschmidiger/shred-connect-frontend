@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Center, NativeSelect, Loader, Text, MultiSelect, Fieldset, Pagination, Image, Badge, Flex, Card, Container, Group, Title } from '@mantine/core';
+import { useState } from 'react';
+import { Container } from '@mantine/core';
 
-import AdPreview from './AdPreview.jsx';
 import FilterForm from './FilterForm.jsx';
 import AdList from './AdList.jsx';
 

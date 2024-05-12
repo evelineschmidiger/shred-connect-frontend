@@ -6,25 +6,28 @@ import {cantons, instrumentsAdCreation as instruments, styles} from "../../../da
 
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);
+    
     const form = useForm({
-        mode: 'uncontrolled',
-        initialValues: {
-          email: "",
-          bandname: "",
-          beschreibung: "",
-          instrument: [],
-          canton: "Aargau",
-          style: [],
-        },
-        validate: {
-          email: (value) => (/^\S+@\S+$/.test(value) ? null : "Ungültige E-Mailadresse"),
-          //bandname: hasLength({ min: 2, max: 25 }, "Der Bandname sollte mindestens 2, maximal 25 Buchstaben haben"),
-          beschreibung: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
-          instrument: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
-          canton: isNotEmpty("Bitte füge einen Kanton hinzu"),
-          style: isNotEmpty("Bitte füge mindestens 1 Style-Tag hinzu")
-        },
-      });
+      mode: 'uncontrolled',
+      initialValues: {
+        email: "",
+        bandname: "",
+        beschreibung: "",
+        instrument: [],
+        canton: "Aargau",
+        style: [],
+      },
+      validate: {
+        email: (value) => (/^\S+@\S+$/.test(value) ? null : "Ungültige E-Mailadresse"),
+        bandname: hasLength({ min: 2, max: 25 }, "Der Bandname sollte mindestens 2, maximal 25 Buchstaben haben"),
+        beschreibung: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
+        instrument: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
+        canton: isNotEmpty("Bitte füge einen Kanton hinzu"),
+        style: isNotEmpty("Bitte füge mindestens 1 Style-Tag hinzu")
+      },
+    });
+
+    
 
 
     function makePostRequest(values) {
@@ -69,9 +72,6 @@ function CreateAd() {
         <form onSubmit={form.onSubmit(
             (values, event) => {
             makePostRequest(values);
-              console.log(
-              // event // <- form element submit event
-              );
             })
         }>
 {/*           Styling: Fieldset displays border ! */}
@@ -139,7 +139,7 @@ function CreateAd() {
               />
 
               <Group justify="flex-start" mt="md">
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit">Inserat erstellen</Button>
               </Group> 
             </Fieldset>  
 

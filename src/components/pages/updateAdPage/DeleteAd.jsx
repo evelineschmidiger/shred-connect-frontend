@@ -1,16 +1,20 @@
 
-import { Flex, Title, Box, Button, Code, Group, LoadingOverlay, Text } from '@mantine/core';
+import { useState } from "react";
+import { TextInput, PinInput, MultiSelect, NativeSelect, Fieldset, Button, Group, Textarea } from '@mantine/core';
+import { useForm, hasLength, isNotEmpty } from "@mantine/form";
+import CodeVerification from "../../helper/CodeVerification";
 
-
+/* first get request to ask for id - then alert - then delete ad with id */
 
 function DeleteAd() {
+  const [adId, setAdId] = useState(null);
 
     return (
-        <Group>
-            <h1>Inserat löschen</h1>
-
-        </Group>
+      <>
+      {!adId ? <CodeVerification buttonTxt="Inserat löschen" setAdId={setAdId} /> : <div>Inserat gefunden, bist du sicher das du es löschen willst?</div>}
+      </>
     )
 }
+
 
 export default DeleteAd

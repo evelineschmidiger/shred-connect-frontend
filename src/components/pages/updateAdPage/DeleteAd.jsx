@@ -11,7 +11,7 @@ function DeleteAd() {
 
     return (
       <>
-      {!adId ? <CodeVerification buttonTxt="Inserat löschen" setAdId={setAdId} /> : <div>Inserat gefunden, bist du sicher das du es löschen willst?</div>}
+      {!adId ? <CodeVerification setAdId={setAdId} /> : <div>Inserat gefunden, bist du sicher das du es löschen willst?</div>}
       </>
     )
 }

@@ -4,7 +4,7 @@ import { useForm, hasLength } from "@mantine/form";
 
 
 
-function CodeVerification( { buttonTxt, setAdId }) {
+function CodeVerification( { setAdId }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const form = useForm({
@@ -63,7 +63,7 @@ function getAdID( code ) {
               />
 
               <Group justify="flex-start" mt="md">
-                  <Button type="submit">{buttonTxt}</Button>
+                  <Button type="submit">Code überprüfen</Button>
               </Group> 
             </Fieldset>  
 

@@ -49,8 +49,8 @@ function AdDetail({ id }) {
     return (
       <Card>
             {isLoading && <Loader />}
-            {!isLoading && !errorMessage && <AdContainer ad={ad}/>}
             {errorMessage && <Title order={4}>{errorMessage}</Title>}
+            {!isLoading && !errorMessage && ad && <AdContainer ad={ad}/>}
       </Card>
     ) 
   }

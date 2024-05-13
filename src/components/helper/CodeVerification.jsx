@@ -41,8 +41,6 @@ function getAdID( code ) {
         }
       }
       fetchAdByID();
-
-
 }
     return (
         <form onSubmit={form.onSubmit(
@@ -50,7 +48,7 @@ function getAdID( code ) {
             getAdID(code.code);
             })
         }>
-            <Fieldset disabled={isLoading && true} >  
+            <Fieldset variant="unstyled" disabled={isLoading && true} >  
               <PinInput
                   label="Code"
                   length={6}

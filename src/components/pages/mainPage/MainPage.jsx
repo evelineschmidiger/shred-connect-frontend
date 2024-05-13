@@ -16,10 +16,13 @@ export default function MainPage() {
     // console.log("Query:", query);
     
     return (
-        <Container fluid>
+
+        <Container size="xl">
             <FilterForm filterQuery={filterQuery} setFilterQuery={setFilterQuery}/>
             <AdList query={query} filterQuery={filterQuery} setPaginationQuery={setPaginationQuery}/>
-        </Container> 
+        </Container>
+
+
     )
 }
 

@@ -9,12 +9,12 @@ function Navigation() {
                 <Group gap="xs" wrap="nowrap">
                     <Image w="auto" fit="contain" h={25} src="/public/guitar1.svg">
                     </Image>
-                    <Title order={6}>SHRED-CONNECT</Title>
+                    <Title order={5}>SHRED-CONNECT</Title>
                 </Group> 
             </Link>
 
             <Link style={{textDecoration: "none", boxShadow: "none", color: "var(--mantine-color-blue-5)"}} to="/update">
-                <Title order={6}>Inserat erstellen oder bearbeiten</Title>
+                <Title order={5}>Inserat erstellen oder bearbeiten</Title>
             </Link>
 
         </Flex>

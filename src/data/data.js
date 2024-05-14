@@ -7,3 +7,5 @@ export const instrumentsAdCreation = [
     "Geige", "Gitarre", "Harfe", "Keyboard", "Klarinette", "Klavier", "Leier", "Mandoline", "Melodica", "Metallophon",
     "Orgel", "Posaune", "Querflöte", "Saxophon", "Schlagzeug", "Synthesizer", "Trommel", "Trompete", "Tuba", "Zimbel", "Zither"
 ];
+
+export const stylesAdCreation = [ "alternative", "ambient", "atmospheric", "black", "blues", "brutal", "core", "cover", "crust", "death", "djent", "doom", "epic", "experimental", "folk", "funeral", "garage", "glam", "gore", "gothic", "grind", "groove", "hardcore", "heavy", "industrial", "jazz", "math", "medieval", "melodic", "neoclassical", "noise", "nu", "occult", "old school", "post", "power", "primitive", "progressive", "psychedelic", "punk", "rap", "ritual", "rock", "rock'n'roll", "sleaze", "sludge", "speed", "stoner", "symphonic", "technical", "thrash", "true"]

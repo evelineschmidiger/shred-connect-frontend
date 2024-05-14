@@ -13,7 +13,7 @@ function AdPreview({ ad }) {
                     <Badge color="var(--mantine-color-blue-9)">{ad.canton.charAt(0).toUpperCase() + ad.canton.slice(1)}</Badge>
                         <Link to={`ads/${ad._id}`}>   
                             <Image
-                            src="/ana-grave-gHcWaeldgtQ-unsplash.jpg"
+                            src={`/${ad.image}.jpg` || "/choice_14.jpg"}
                             height={160}
                             alt="Live Musician"
                             />

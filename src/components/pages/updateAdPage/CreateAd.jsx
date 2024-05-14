@@ -1,8 +1,10 @@
 
 import { useState } from "react";
-import { TextInput, MultiSelect, NativeSelect, Fieldset, Button, Group, Textarea } from '@mantine/core';
+import { TextInput, MultiSelect, Image, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
-import {cantons, instrumentsAdCreation as instruments, styles} from "../../../data/data.js";
+import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../data/data.js";
+import RadioElem from "./helper/RadioElem.jsx";
+import RadioElement from "./helper/RadioElem.jsx";
 
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);
@@ -27,18 +29,22 @@ function CreateAd() {
       },
     });
 
+    const pictureNumbers = Array.from(Array(17), (_, i) => (`0${i+1}`).length === 2 ? `0${i+1}` : `${i+1}`);
+    
+
     
 
 
     function makePostRequest(values) {
-      const { email, bandname, beschreibung, style, instrument, canton } = values;
+      const { email, bandname, beschreibung, style, instrument, canton, image } = values;
       const bodyObject = {
         name: bandname,
         email,
         message: beschreibung,
         instrument,
         canton,
-        style
+        style,
+        image
       }
 
       async function postAd() {
@@ -54,7 +60,7 @@ function CreateAd() {
 
           const errorMessage = (body.message.name === "MongoError") ? "Ein Fehler ist aufgetreten" : body.message.errors.name.message;
           //console.log(body.message.errors.name.message);
-          console.log(errorMessage);
+          console.log(body);
           if (response.ok) console.log("ad successfully created")
           if(body.status === "fail") throw new Error(errorMessage);
           
@@ -137,6 +143,18 @@ function CreateAd() {
               key={form.key("style")}
               {...form.getInputProps("style")}
               />
+
+              <Radio.Group
+                justify="flex-start"
+                mt="md"
+                key={form.key("image")}
+                {...form.getInputProps("image")}
+              >
+                  <Flex wrap="wrap">
+                    {pictureNumbers.map(num => <RadioElement number={num} key={num} />)}
+                      
+                  </Flex>
+              </Radio.Group> 
 
               <Group justify="flex-start" mt="md">
                   <Button type="submit">Inserat erstellen</Button>

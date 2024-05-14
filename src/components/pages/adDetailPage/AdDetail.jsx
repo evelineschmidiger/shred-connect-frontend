@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Stack, Loader, Text, Flex, Card, Container, Group, Title, Divider } from '@mantine/core';
+import { Stack, Loader, Text, Flex, Card, Container, Image, Title, Divider } from '@mantine/core';
 
 import BadgeGroup from '../../helper/BadgeGroup';
 
@@ -7,9 +7,6 @@ function AdDetail({ id }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [ad, setAd] = useState("");
-
-    const date = ad && ad.createdAt;
-    const formattedDate = ad && new Date(date).toLocaleDateString("ch-DE", {day: "numeric", month: "long", year: "numeric"});
 
 
 
@@ -57,7 +54,7 @@ function AdDetail({ id }) {
       <Card>
           {isLoading && <Loader />}
           {errorMessage && <Title order={4}>{errorMessage}</Title>}
-          {!isLoading && !errorMessage && ad && <AdContainer date ={formattedDate} ad={ad}/>}
+          {!isLoading && !errorMessage && ad && <AdContainer ad={ad}/>}
       </Card>
     ) 
   }
@@ -66,36 +63,61 @@ export default AdDetail;
 
 
 
-function AdContainer( { date, ad } ) {
+function AdContainer( { ad } ) {
+
+  const created = ad.createdAt && formatDate(ad.createdAt);
+  const updated = ad.lastUpdatedAt && formatDate(ad.lastUpdatedAt);
+
+  function formatDate(date) {
+    return new Date(date).toLocaleDateString("ch-DE", {day: "numeric", month: "long", year: "numeric"})
+  }
 
     return (
         <Container>
-            <Title order={3}>{ad.name}</Title>
-            <Text>
-            {ad.message}
-            </Text>
+            <Stack>
+              <Title order={3}>{ad.name}</Title>
+              <Image
+                src={`/${ad.image}.jpg` || "/choice_14.jpg"}
+                height={120}
+                alt="Live Musician"
+              />   
+              <Text>
+              {ad.message}
+              </Text>
+              <Stack>
+                <Divider size="xs" label="Instrument" labelPosition="left" />
+                <BadgeGroup array={ad.instrument} color="blue" />
+              </Stack>
+
+              <Stack>
+                <Divider size="xs" label="Kanton" labelPosition="left" />
+                <BadgeGroup array={[ad.canton]} color="blue" />
+              </Stack>
+
+              <Stack>
+                <Divider size="xs" label="Stil" labelPosition="left" />
+                <BadgeGroup array={ad.style} color="blue"/>
+              </Stack>
+
+              {created && 
+              <Stack>
+                <Divider size="xs" label="Erstellt am" labelPosition="left" />
+                <Text>{created}</Text>
+              </Stack>
+              }
+
+              {updated && 
+              <Stack>
+                <Divider size="xs" label="Letztes Update" labelPosition="left" />
+                <Text>{updated}</Text>
+              </Stack>
+              }
+            </Stack>
             
-            <Divider/>
 
-            <Stack justify='space-between'>
-            <Title order={3}>Instrument</Title>
-            <BadgeGroup array={ad.instrument} color="blue" />
-            </Stack>
-
-            <Divider/>
-
-            <Stack justify='space-between'>
-            <Title order={3}>Stil</Title>
-            <BadgeGroup array={ad.style} color="blue"/>
-            </Stack>
-
-            <Divider/>
-
-            <Stack justify='space-between'>
-            <Title order={3}>Erstellt am</Title>
-            <p>{date}</p>
-            </Stack>
         </Container>
     )
     
 }
+
+

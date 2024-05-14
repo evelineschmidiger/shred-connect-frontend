@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Stack, Loader, Textarea, Fieldset, Button, Flex, Card, Container, Group, Title, Divider } from '@mantine/core';
+import { Stack, Loader, Text, Flex, Card, Container, Group, Title, Divider } from '@mantine/core';
 
 import BadgeGroup from '../../helper/BadgeGroup';
 
@@ -7,6 +7,12 @@ function AdDetail({ id }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [ad, setAd] = useState("");
+
+    const date = ad && ad.createdAt;
+    const formattedDate = ad && new Date(date).toLocaleDateString("ch-DE", {day: "numeric", month: "long", year: "numeric"});
+
+
+
 
     useEffect(function() {
       const controller = new AbortController();
@@ -29,7 +35,8 @@ function AdDetail({ id }) {
         }
       }
       fetchAdByID();
-    }, [])
+
+    }, [id])
 
 
     /*
@@ -48,9 +55,9 @@ function AdDetail({ id }) {
 
     return (
       <Card>
-            {isLoading && <Loader />}
-            {errorMessage && <Title order={4}>{errorMessage}</Title>}
-            {!isLoading && !errorMessage && ad && <AdContainer ad={ad}/>}
+          {isLoading && <Loader />}
+          {errorMessage && <Title order={4}>{errorMessage}</Title>}
+          {!isLoading && !errorMessage && ad && <AdContainer date ={formattedDate} ad={ad}/>}
       </Card>
     ) 
   }
@@ -59,14 +66,14 @@ export default AdDetail;
 
 
 
-function AdContainer( { ad } ) {
+function AdContainer( { date, ad } ) {
 
     return (
         <Container>
             <Title order={3}>{ad.name}</Title>
-            <p>
+            <Text>
             {ad.message}
-            </p>
+            </Text>
             
             <Divider/>
 
@@ -86,7 +93,7 @@ function AdContainer( { ad } ) {
 
             <Stack justify='space-between'>
             <Title order={3}>Erstellt am</Title>
-            <p>{ad.createdAt}</p>
+            <p>{date}</p>
             </Stack>
         </Container>
     )

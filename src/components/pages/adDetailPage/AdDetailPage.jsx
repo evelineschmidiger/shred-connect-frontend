@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+
 import { useParams, useNavigate } from "react-router";
-import { useSearchParams } from "react-router-dom";
-import { TextInput, Stack, Loader, Textarea, Fieldset, Button, Flex, Card, Container, Group, Title, Divider } from '@mantine/core';
+import {  Button, Container, Group } from '@mantine/core';
 
 import ContactForm from './ContactForm';
 import AdDetail from './AdDetail';
@@ -11,7 +10,7 @@ import AdDetail from './AdDetail';
 
 export default function AdDetailPage() {
 
-    const navigate = useNavigate();
+/*     const navigate = useNavigate(); */
 
     const { id } = useParams();
 
@@ -23,7 +22,7 @@ export default function AdDetailPage() {
             <ContactForm />
           </Group>
 
-          <Button onClick={() => navigate(-1)}>Zurück</Button>
+          {/* <Button onClick={() => navigate(-1)}>Zurück</Button> */}
           
         </Container>
     )

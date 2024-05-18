@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { PinInput,  Fieldset, Button, Group } from '@mantine/core';
+import { useState, useEffect } from "react";
+import { PinInput, Space, Container, Text, Fieldset, Button, Group } from '@mantine/core';
 import { useForm, hasLength } from "@mantine/form";
 
 
 
 function CodeVerification( { setAdId }) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+
+
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
@@ -43,12 +45,17 @@ function getAdID( code ) {
       fetchAdByID();
 }
     return (
+
         <form onSubmit={form.onSubmit(
             (code) => {
             getAdID(code.code);
             })
         }>
-            <Fieldset variant="unstyled" disabled={isLoading && true} >  
+           
+            <Fieldset variant="unstyled" disabled={isLoading && true} > 
+              <Space h="md"/>
+              <Text>Bitte gib hier deinen 6-Stelligen Inserate-Code ein</Text>
+              <Space h="lg"/>
               <PinInput
                   label="Code"
                   length={6}
@@ -60,12 +67,18 @@ function getAdID( code ) {
                   {...form.getInputProps("code")}
               />
 
-              <Group justify="flex-start" mt="md">
-                  <Button type="submit">Code überprüfen</Button>
-              </Group> 
+              <Space h="xl"/>
+            
+              <Button type="submit">Code überprüfen</Button>
+
+              <Space h="md"/>
+          
             </Fieldset>  
 
+          
+
         </form>
+
     )
 }
 

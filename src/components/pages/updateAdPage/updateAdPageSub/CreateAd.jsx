@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { TextInput, MultiSelect, Image, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
-import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../data/data.js";
-import RadioElem from "./helper/RadioElem.jsx";
-import RadioElement from "./helper/RadioElem.jsx";
+import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../data/data.js";
+import RadioElem from "../helper/RadioElem.jsx";
+import RadioElement from "../helper/RadioElem.jsx";
 
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);

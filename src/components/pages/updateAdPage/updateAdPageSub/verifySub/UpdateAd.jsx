@@ -1,7 +1,7 @@
 function UpdateAd() {
     return (
         <div>
-            UpdateAdPage
+            Update Ad
         </div>
     )
 }

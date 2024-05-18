@@ -5,7 +5,7 @@ import { Container, Stack, Title, Button, SegmentedControl } from '@mantine/core
 
 
 export default function UpdateAdPage() {
-    const [value, setValue] = useState('/update/create');
+    const [value, setValue] = useState('create');
     
     
     const navigate = useNavigate();
@@ -18,20 +18,16 @@ export default function UpdateAdPage() {
         <Container size="sm">
             <Stack>
                 
-                {/* <Title order={4}>Was möchtest du machen?</Title> */}
                 <SegmentedControl
                     value={value}
                     onChange={setValue}
                     data={[
                         {label: "Inserat erstellen", value: "create"},
-                        {label: "Inserat bearbeiten", value: "update"},
-                        {label: "Inserat löschen", value: "delete"},
+                        {label: "Inserat bearbeiten oder löschen", value: "verify"},
                     ]}
                 />
                 <Outlet />
             </Stack>
-            {/* <Button variant="default" onClick={() => navigate("/")}>Zurück zur Startseite</Button> */}
-
         
         </Container>
     )

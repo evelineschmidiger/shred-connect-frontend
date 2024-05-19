@@ -3,8 +3,7 @@ import { useState } from "react";
 import { TextInput, MultiSelect, Image, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../data/data.js";
-import RadioElem from "../helper/RadioElem.jsx";
-import RadioElement from "../helper/RadioElem.jsx";
+import RadioImages from "../helper/RadioImages.jsx";
 
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +22,7 @@ function CreateAd() {
         email: (value) => (/^\S+@\S+$/.test(value) ? null : "Ungültige E-Mailadresse"),
         bandname: hasLength({ min: 2, max: 25 }, "Der Bandname sollte mindestens 2, maximal 25 Buchstaben haben"),
         beschreibung: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
-        instrument: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
+        instrument: isNotEmpty("Bitte füge ein Instrument hinzu"),
         canton: isNotEmpty("Bitte füge einen Kanton hinzu"),
         style: isNotEmpty("Bitte füge mindestens 1 Style-Tag hinzu")
       },
@@ -151,7 +150,7 @@ function CreateAd() {
                 {...form.getInputProps("image")}
               >
                   <Flex wrap="wrap">
-                    {pictureNumbers.map(num => <RadioElement number={num} key={num} />)}
+                    {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
                       
                   </Flex>
               </Radio.Group> 

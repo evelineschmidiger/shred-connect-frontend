@@ -30,8 +30,8 @@ function Verify() {
                       { label: 'ändern', value: 'update' },
                     ]}
                   />
-                {value === "delete" && <DeleteAd id={adId} />}
-                {value === "update" && <UpdateAd />}
+                {value === "delete" && <DeleteAd id={adId} ad={ad} />}
+                {value === "update" && <UpdateAd id={adId} />}
               </Stack>
           </Group>}
 

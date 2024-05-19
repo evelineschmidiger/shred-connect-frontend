@@ -36,20 +36,6 @@ function AdDetail({ id }) {
     }, [id])
 
 
-    /*
-    return(
-      <Container>
-        <Group justify="center" grow gap="lg">
-          {isLoading && <Loader />}
-          {!isLoading && !errorMessage && <AdContainer ad={ad}/>}
-          {errorMessage && <Title order={4}>{errorMessage}</Title>}
-          <ContactForm />   
-        </Group>
-
-
-      </Container>
-    )  */
-
     return (
       <Card>
           {isLoading && <Loader />}

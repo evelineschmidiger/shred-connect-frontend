@@ -9,6 +9,7 @@ function DeleteAd( { id }) {
     const [errorMessage, setErrorMessage] = useState("");
 
 
+
     function deleteRequest(id) {
 
         async function deleteAdByID() {

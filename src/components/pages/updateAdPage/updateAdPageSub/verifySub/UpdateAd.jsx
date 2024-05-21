@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Fieldset, Stack, Flex, Switch, Group, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Title } from "@mantine/core";
+import { Button, Fieldset, Checkbox, Stack, Flex, Switch, Group, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Title } from "@mantine/core";
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import RadioImages from "../../helper/RadioImages.jsx";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../../data/data.js";
@@ -7,14 +7,40 @@ import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as style
 
 function UpdateAd( { id }) {
     const [isLoading, setIsLoading] = useState(false);
-    const [checked, setChecked] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [ad, setAd] = useState("");
+    const [value, setValue] = useState([]);
+
+    //const valueCopy = [...value]
+    //const initialFormValuesObject = valueCopy.reduce((acc, cur) => ({ ...acc, [cur]: (cur === "instrument") || (cur === "style") ? [] : ""}), {})
+    const initialFormValues = {
+      name: ad.name || "",
+      message: ad.message,
+      instrument: ad.instrument,
+      canton: ad.canton,
+      style: ad.style
+    }
+
+    const fullFormValidationObject = {
+              name: hasLength({ min: 2, max: 25 }, "Der Bandname sollte mindestens 2, maximal 25 Buchstaben haben"),
+              message: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
+              instrument: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
+              canton: isNotEmpty("Bitte füge einen Kanton hinzu"),
+              style: isNotEmpty("Bitte füge mindestens 1 Style-Tag hinzu"),
+              image: isNotEmpty("Bitte füge mindestens 1 Style-Tag hinzu")
+            }
+
+
+    const form = useForm({
+      mode: 'uncontrolled',
+      initialValues: initialFormValues,
+      validate: fullFormValidationObject,
+    });
+
     const pictureNumbers = Array.from(Array(17), (_, i) => (`0${i+1}`).length === 2 ? `0${i+1}` : `${i+1}`);
 
-    console.log(ad)
 
-    // Post-Request on mount to get ad values & place them as default values in form
+    // Post-Request on mount to get ad values 
     useEffect(function() {
       const controller = new AbortController();
       async function fetchAdByID() {
@@ -36,50 +62,57 @@ function UpdateAd( { id }) {
         }
       }
       fetchAdByID();
-      form.setValues({
-        bandname: ad.name,
-        beschreibung: ad.message,
-        instrument: ad.instrument,
-        canton: ad.canton,
-        style: ad.style,
-        image: ad.image
-      });
-      
-
     }, [id])
-    
-    const form = useForm({
-        mode: 'uncontrolled',
-        initialValues: {
-          bandname: "",
-          beschreibung: "",
-          instrument: [],
-          canton: "Aargau",
-          style: [],
-          image: "choice_05"
-        },
-        validate: {
-          bandname: hasLength({ min: 2, max: 25 }, "Der Bandname sollte mindestens 2, maximal 25 Buchstaben haben"),
-          beschreibung: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
-          instrument: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
-          canton: isNotEmpty("Bitte füge einen Kanton hinzu"),
-          style: isNotEmpty("Bitte füge mindestens 1 Style-Tag hinzu")
-        },
-      });
+
+  // set defaultValues when ad state changes (when it was fetched)
+  // Do not add "form" in dependency array!
+  
+    useEffect(function() {
+      form.setValues({
+        name: ad.name ? ad.name : "",
+        message: ad.message ? ad.message : "",
+        instrument: ad.instrument ? ad.instrument : [],
+        canton: ad.canton ? ad.canton : "",
+        style: ad.style ? ad.style : [],
+        image: ad.image ? ad.image : ""
+      }); 
+    }, [ad])
+
+    // set default Value in field when unchecked -> is not sent, but needs to pass validation anyway
+    useEffect(function() {
+      const possibleValues = ["name", "message", "instrument", "canton", "style", "image"]
+      const valueCopy = [...value]
+      const unchecked = possibleValues.filter(elem => !valueCopy.includes(elem))
+      console.log(unchecked);
+      const valuesObject = unchecked.reduce((acc, value) => {
+        if (value === "name") {return {...acc, name: ad.name}}
+        if (value === "message") {return {...acc, message: ad.message}}
+        if (value === "instrument") {return {...acc, instrument: ad.instrument}}
+        if (value === "canton") {return {...acc, canton: ad.canton}}
+        if (value === "style") {return {...acc, style: ad.style}}
+        if (value === "image") {return {...acc, image: ad.image}}
+        else return {...acc}
+      }, {})
+      form.setValues(valuesObject);  
+    }, [value, ad])
 
 
 
     function makePatchRequest(values) {
-    const { bandname, beschreibung, style, instrument, canton, image } = values;
-    const bodyObject = {
-        name: bandname,
-        message: beschreibung,
-        instrument,
-        canton,
-        style,
-        image
-    }
-    console.log(bodyObject);
+    const { name, message, style, instrument, canton, image } = values;
+    const valueCopy = [...value]
+    const bodyObject = valueCopy.reduce((acc, value) => {
+      if (value === "name") {return {...acc, name: name}}
+      if (value === "message") {return {...acc, message: message}}
+      if (value === "instrument") {return {...acc, instrument: instrument}}
+      if (value === "canton") {return {...acc, canton: canton}}
+      if (value === "style") {return {...acc, style: style}}
+      if (value === "image") {return {...acc, image: image}}
+      else return {...acc}
+    }, {})
+
+
+
     async function postAd() {
         try {
             
@@ -109,6 +142,17 @@ function UpdateAd( { id }) {
 
 
     return (
+      <>
+      <Checkbox.Group value={value} onChange={setValue}>
+        <Checkbox value="name" label="Bandname" />
+        <Checkbox value="message" label="Beschreibung" />
+        <Checkbox value="instrument" label="Instrument" />
+        <Checkbox value="canton" label="Kanton" />
+        <Checkbox value="style" label="Stil" />
+        <Checkbox value="image" label="Bild" />
+      </Checkbox.Group>
+
+
         <form onSubmit={form.onSubmit(
             (values) => {
             console.log(values);
@@ -116,30 +160,24 @@ function UpdateAd( { id }) {
 
             })
         }>
-
             <Fieldset disabled={isLoading && true} >  
 
-            <FormElem title={"Bandname"}>
-                    <TextInput
+                    {value.includes("name") && <TextInput
                     placeholder="Bandname"
-                    key={form.key("bandname")}
-                    {...form.getInputProps("bandname")}
-                    />
-                </FormElem>
-          
+                    key={form.key("name")}
+                    {...form.getInputProps("name")}
+                    />}
 
-                <FormElem title={"Beschreibung"}>
-                    <Textarea
-               
+        
+                    {value.includes("message") && <Textarea
                     placeholder="Beschreibung"
-                    key={form.key("beschreibung")}
-                    {...form.getInputProps("beschreibung")}
-                    />
-                </FormElem>
+                    key={form.key("message")}
+                    {...form.getInputProps("message")}
+                    />}
 
-                <FormElem title={"Instrument"}>
-                    <MultiSelect
-                
+
+
+                    {value.includes("instrument") && <MultiSelect
                     placeholder="Wähle mindestens 1 und maximal 4 Instrumente"
                     maxValues={4}
                     searchable
@@ -147,23 +185,19 @@ function UpdateAd( { id }) {
                     data={instruments}
                     key={form.key("instrument")}
                     {...form.getInputProps("instrument")}
-                    />
-                </FormElem>
+                    />}
 
-            
-                <FormElem title={"Kanton"}>
-                    <NativeSelect
-                  
+
+                    {value.includes("canton") && <NativeSelect
                     description="Wähle einen oder mehrere Kantone"
                     data={cantons}
                     key={form.key("canton")}
                     {...form.getInputProps("canton")}
-                    />
-                </FormElem>
+                    />}
 
-                <FormElem title={"Stil"}>
-                    <MultiSelect
-          
+
+
+                    {value.includes("style") && <MultiSelect
                     description="Wähle mindestens 1 und maximal 4 Style-Tags die euren Stil am besten beschreiben aus"
                     data={styles}
                     maxValues={4}
@@ -171,11 +205,10 @@ function UpdateAd( { id }) {
                     hidePickedOptions
                     key={form.key("style")}
                     {...form.getInputProps("style")}
-                    />
-                </FormElem>
+                    />}
 
-                <FormElem title={"Anzeigebild"}>
-                    <Radio.Group
+
+                    {value.includes("image") && <Radio.Group
                     justify="flex-start"
                     mt="md"
                     key={form.key("image")}
@@ -184,34 +217,23 @@ function UpdateAd( { id }) {
                     <Flex wrap="wrap">
                         {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
                     </Flex>
-                    </Radio.Group> 
-                </FormElem> 
+                    </Radio.Group>}
 
 
-                <Group justify="flex-start" mt="md">
-                    <Button type="submit">Inserat ändern</Button>
-                </Group> 
+
+                  <Group justify="flex-start" mt="md">
+                      <Button type="submit">Inserat ändern</Button>
+                  </Group> 
             </Fieldset>  
 
         </form>
+      </>
     )
 }
 
 export default UpdateAd
 
-function FormElem({ children, title }) {
-    const [checked, setChecked] = useState(false);
 
-    return (
-        <Group>
-            <Switch checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)}/>
-            <Stack>
-                <Title order={5}>{title}</Title>
-                {checked && children}
-            </Stack>
-        </Group>
-    )
-}
 
 
 

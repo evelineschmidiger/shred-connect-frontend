@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Stack, Loader, Text, Flex, Card, Container, Image, Title, Divider } from '@mantine/core';
+import { Stack, Loader, Text, Card, Container, Image, Title, Divider } from '@mantine/core';
 
 import BadgeGroup from '../../helper/BadgeGroup';
 

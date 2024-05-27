@@ -16,8 +16,7 @@ export default function UpdateAdPage() {
 
     return (
         <Container size="sm">
-            <Stack>
-                
+            <Stack>     
                 <SegmentedControl
                     value={value}
                     onChange={setValue}

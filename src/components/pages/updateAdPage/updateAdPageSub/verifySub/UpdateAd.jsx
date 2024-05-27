@@ -3,11 +3,13 @@ import { Button, Fieldset, Checkbox, Stack, Flex, Switch, Group, MultiSelect, Na
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import RadioImages from "../../helper/RadioImages.jsx";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../../data/data.js";
+import ResultAlert from "../../../../helper/ResultAlert.jsx";
 
 
-function UpdateAd( { id }) {
+function UpdateAd( { id, setIsUpdated }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [status, setStatus] = useState("pending"); // pending, success, fail
     const [ad, setAd] = useState("");
     const [value, setValue] = useState([]);
 
@@ -45,8 +47,6 @@ function UpdateAd( { id }) {
       const controller = new AbortController();
       async function fetchAdByID() {
         try {
-          setIsLoading(true);
-          setErrorMessage("");
           const res = await fetch(`http://localhost:7777/api/adverts/${id}`, {signal: controller.signal});
           if(!res.ok) throw new Error("Etwas ist schiefgelaufen beim Laden des Inserats");
           const data = await res.json();
@@ -55,18 +55,14 @@ function UpdateAd( { id }) {
         } catch (err) {
           if (err.name !== "AbortError") {
             console.log(err.message);
-            setErrorMessage(err.message);
           } 
-        } finally {
-          setIsLoading(false);
-        }
+        } 
       }
       fetchAdByID();
     }, [id])
 
   // set defaultValues when ad state changes (when it was fetched)
   // Do not add "form" in dependency array!
-  
     useEffect(function() {
       form.setValues({
         name: ad.name ? ad.name : "",
@@ -83,7 +79,6 @@ function UpdateAd( { id }) {
       const possibleValues = ["name", "message", "instrument", "canton", "style", "image"]
       const valueCopy = [...value]
       const unchecked = possibleValues.filter(elem => !valueCopy.includes(elem))
-      console.log(unchecked);
       const valuesObject = unchecked.reduce((acc, value) => {
         if (value === "name") {return {...acc, name: ad.name}}
         if (value === "message") {return {...acc, message: ad.message}}
@@ -98,7 +93,7 @@ function UpdateAd( { id }) {
 
 
 
-    function makePatchRequest(values) {
+    function updateAd(values) {
     const { name, message, style, instrument, canton, image } = values;
     const valueCopy = [...value]
     const bodyObject = valueCopy.reduce((acc, value) => {
@@ -112,121 +107,117 @@ function UpdateAd( { id }) {
     }, {})
 
 
+      async function makePatchRequest() {
+          try {
+          setIsLoading(true);
+          setErrorMessage("");
+          setStatus("pending");
+          setIsUpdated(false);
+          const response = await fetch(`http://localhost:7777/api/adverts/${id}`, {
+              method: "PATCH",
+              headers: {"Content-Type": "application/json"},
+              body: JSON.stringify(bodyObject)
+              })
 
-    async function postAd() {
-        try {
-            
-        setIsLoading(true);
-        const response = await fetch(`http://localhost:7777/api/adverts/${id}`, {
-            method: "PATCH",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(bodyObject)
-            })
-        const body = await response.json();
-        console.log(body);
+          const body = await response.json();
+          if(!response.ok) throw new Error(errorMessage);
+          setStatus("success");
+          setIsUpdated(true);
 
-        const errorMessage = (body.message.name === "MongoError") ? "Ein Fehler ist aufgetreten" : body.message.errors.name.message;
-        //console.log(body.message.errors.name.message);
-        console.log(body);
-        if (response.ok) console.log("ad successfully created")
-        if(body.status === "fail") throw new Error(errorMessage);
-        
-        } catch (err) {
-        //console.log(err);
-        } finally {
-        setIsLoading(false);
-        }
-    }
-    postAd();
+          } catch (err) {
+          setErrorMessage(err.message);
+          setStatus("fail")
+          } finally {
+          setIsLoading(false);
+          }
+      }
+      makePatchRequest();
     }
 
 
     return (
       <>
-      <Checkbox.Group value={value} onChange={setValue}>
-        <Checkbox value="name" label="Bandname" />
-        <Checkbox value="message" label="Beschreibung" />
-        <Checkbox value="instrument" label="Instrument" />
-        <Checkbox value="canton" label="Kanton" />
-        <Checkbox value="style" label="Stil" />
-        <Checkbox value="image" label="Bild" />
-      </Checkbox.Group>
+        {(status === "pending" || status === "fail") && 
+                <Stack>
+                <Checkbox.Group value={value} onChange={setValue}>
+                  <Checkbox value="name" label="Bandname" />
+                  <Checkbox value="message" label="Beschreibung" />
+                  <Checkbox value="instrument" label="Instrument" />
+                  <Checkbox value="canton" label="Kanton" />
+                  <Checkbox value="style" label="Stil" />
+                  <Checkbox value="image" label="Bild" />
+                </Checkbox.Group>
+    
+                <form onSubmit={form.onSubmit(
+                    (values) => {
+                    updateAd(values);
+                    })
+                }>
+                    <Fieldset disabled={isLoading && true} >  
+    
+                            {value.includes("name") && <TextInput
+                            placeholder="Bandname"
+                            key={form.key("name")}
+                            {...form.getInputProps("name")}
+                            />}
+    
+                            {value.includes("message") && <Textarea
+                            placeholder="Beschreibung"
+                            key={form.key("message")}
+                            {...form.getInputProps("message")}
+                            />}
+    
+                            {value.includes("instrument") && <MultiSelect
+                            placeholder="Wähle mindestens 1 und maximal 4 Instrumente"
+                            maxValues={4}
+                            searchable
+                            hidePickedOptions
+                            data={instruments}
+                            key={form.key("instrument")}
+                            {...form.getInputProps("instrument")}
+                            />}
+    
+                            {value.includes("canton") && <NativeSelect
+                            description="Wähle einen oder mehrere Kantone"
+                            data={cantons}
+                            key={form.key("canton")}
+                            {...form.getInputProps("canton")}
+                            />}
+    
+                            {value.includes("style") && <MultiSelect
+                            description="Wähle mindestens 1 und maximal 4 Style-Tags die euren Stil am besten beschreiben aus"
+                            data={styles}
+                            maxValues={4}
+                            searchable
+                            hidePickedOptions
+                            key={form.key("style")}
+                            {...form.getInputProps("style")}
+                            />}
+    
+                            {value.includes("image") && <Radio.Group
+                            justify="flex-start"
+                            mt="md"
+                            key={form.key("image")}
+                            {...form.getInputProps("image")}
+                            >
+                            <Flex wrap="wrap">
+                                {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
+                            </Flex>
+                            </Radio.Group>}
+                
+                          <Group justify="flex-start" mt="md">
+                              <Button type="submit">Inserat ändern</Button>
+                          </Group> 
+    
+    
+                    </Fieldset> 
+    
+                </form>
+            </Stack>
+        }
+        {status === "success" && !isLoading && <ResultAlert message="Dein Inserat wurde geändert" wasSuccessful={true}></ResultAlert>}
+        {status === "fail" && !isLoading && <ResultAlert message="Das Ändern des Inserates hat nicht funktioniert. Bitte versuche es noch einmal." wasSuccessful={false}></ResultAlert>}
 
-
-        <form onSubmit={form.onSubmit(
-            (values) => {
-            console.log(values);
-            makePatchRequest(values);
-
-            })
-        }>
-            <Fieldset disabled={isLoading && true} >  
-
-                    {value.includes("name") && <TextInput
-                    placeholder="Bandname"
-                    key={form.key("name")}
-                    {...form.getInputProps("name")}
-                    />}
-
-        
-                    {value.includes("message") && <Textarea
-                    placeholder="Beschreibung"
-                    key={form.key("message")}
-                    {...form.getInputProps("message")}
-                    />}
-
-
-
-                    {value.includes("instrument") && <MultiSelect
-                    placeholder="Wähle mindestens 1 und maximal 4 Instrumente"
-                    maxValues={4}
-                    searchable
-                    hidePickedOptions
-                    data={instruments}
-                    key={form.key("instrument")}
-                    {...form.getInputProps("instrument")}
-                    />}
-
-
-                    {value.includes("canton") && <NativeSelect
-                    description="Wähle einen oder mehrere Kantone"
-                    data={cantons}
-                    key={form.key("canton")}
-                    {...form.getInputProps("canton")}
-                    />}
-
-
-
-                    {value.includes("style") && <MultiSelect
-                    description="Wähle mindestens 1 und maximal 4 Style-Tags die euren Stil am besten beschreiben aus"
-                    data={styles}
-                    maxValues={4}
-                    searchable
-                    hidePickedOptions
-                    key={form.key("style")}
-                    {...form.getInputProps("style")}
-                    />}
-
-
-                    {value.includes("image") && <Radio.Group
-                    justify="flex-start"
-                    mt="md"
-                    key={form.key("image")}
-                    {...form.getInputProps("image")}
-                    >
-                    <Flex wrap="wrap">
-                        {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
-                    </Flex>
-                    </Radio.Group>}
-
-
-
-                  <Group justify="flex-start" mt="md">
-                      <Button type="submit">Inserat ändern</Button>
-                  </Group> 
-            </Fieldset>  
-
-        </form>
       </>
     )
 }

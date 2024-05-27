@@ -1,12 +1,16 @@
 
 import { useState } from "react";
-import { TextInput, MultiSelect, Image, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
+import { TextInput, MultiSelect, Loader,Container, Image, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../data/data.js";
 import RadioImages from "../helper/RadioImages.jsx";
+import ResultAlert from "../../../helper/ResultAlert.jsx";
+import AdDetail from "../../adDetailPage/AdDetail";
 
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [adId, setAdId] = useState("")
     
     const form = useForm({
       mode: 'uncontrolled',
@@ -31,8 +35,6 @@ function CreateAd() {
     const pictureNumbers = Array.from(Array(17), (_, i) => (`0${i+1}`).length === 2 ? `0${i+1}` : `${i+1}`);
     
 
-    
-
 
     function makePostRequest(values) {
       const { email, bandname, beschreibung, style, instrument, canton, image } = values;
@@ -49,22 +51,27 @@ function CreateAd() {
       async function postAd() {
         try {
           setIsLoading(true);
+          setErrorMessage("");
+          setAdId("")
           const response = await fetch("http://localhost:7777/api/adverts", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(bodyObject)
             })
-          const body = await response.json();
-          //console.log(body);
+            const body = await response.json();
+          
+          if (!response.ok) {
+            
+            if(body.status === "fail") {
+              console.log(body.message);
+            }
+            throw new Error("Etwas ist schief gelaufen beim Erstellen des Inserates")
+          }      
 
-          const errorMessage = (body.message.name === "MongoError") ? "Ein Fehler ist aufgetreten" : body.message.errors.name.message;
-          //console.log(body.message.errors.name.message);
-          console.log(body);
-          if (response.ok) console.log("ad successfully created")
-          if(body.status === "fail") throw new Error(errorMessage);
+          setAdId(body.data.ad._id)
           
         } catch (err) {
-          //console.log(err);
+          setErrorMessage(err.message);
         } finally {
           setIsLoading(false);
         }
@@ -74,12 +81,17 @@ function CreateAd() {
 
 
     return (
+   
+      <>
+      {isLoading && <Loader></Loader>}
+      {!isLoading && errorMessage && <ResultAlert message={errorMessage} wasSuccessful={false} />}
+      {!isLoading && adId && <><ResultAlert message="Dein Inserat wurde erstellt" wasSuccessful={true} /><Container><AdDetail id={adId}/></Container></>}
+      {!adId && !isLoading && 
         <form onSubmit={form.onSubmit(
-            (values, event) => {
+            (values) => {
             makePostRequest(values);
             })
-        }>
-{/*           Styling: Fieldset displays border ! */}
+           }>
             <Fieldset disabled={isLoading && true} >  
               <TextInput
                   withAsterisk
@@ -159,8 +171,9 @@ function CreateAd() {
                   <Button type="submit">Inserat erstellen</Button>
               </Group> 
             </Fieldset>  
+        </form>}
 
-        </form>
+      </>
     )
 }
 

@@ -1,8 +1,8 @@
 import { Alert } from '@mantine/core';
 
-function ResultAlert( { message, wasSuccessful } ) {
+function ResultAlert( { title, message, wasSuccessful } ) {
     return (
-        <Alert color={wasSuccessful ? "green" : "red"}>{message}</Alert>
+        <Alert title={title} color={wasSuccessful ? "green" : "red"}>{message}</Alert>
     )
 }
 

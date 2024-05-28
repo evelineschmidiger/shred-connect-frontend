@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { TextInput, MultiSelect, Loader,Container, Image, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
+import { TextInput, MultiSelect, Loader,Container, Text, Image, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../data/data.js";
 import RadioImages from "../helper/RadioImages.jsx";
@@ -10,7 +10,9 @@ import AdDetail from "../../adDetailPage/AdDetail";
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [adId, setAdId] = useState("")
+    const [adId, setAdId] = useState("");
+    const [adCode, setAdCode] = useState("");
+    const [emailWasSent, setEmailWasSent] = useState(false);
     
     const form = useForm({
       mode: 'uncontrolled',
@@ -69,6 +71,8 @@ function CreateAd() {
           }      
 
           setAdId(body.data.ad._id)
+          setAdCode(body.data.ad.code)
+          sendCodeEmail(body.data.ad.code, body.data.ad.email)
           
         } catch (err) {
           setErrorMessage(err.message);
@@ -80,12 +84,44 @@ function CreateAd() {
     }
 
 
+    function sendCodeEmail(code, email) {
+
+      async function postRequest() {
+        try {
+          const response = await fetch("http://localhost:7777/api/adverts/sendCode", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+              email,
+              code
+            })
+          })
+          
+          const body = await response.json();
+          if (!response.ok) {
+            console.log(response);
+          //throw new Error("Die Email mit dem Inserate-Code konnte nicht versandt werden")
+          }
+
+        setEmailWasSent(true);
+        } catch (err) {
+          //console.log(err);
+        }
+      }
+      postRequest();
+    }
+
+
     return (
-   
       <>
       {isLoading && <Loader></Loader>}
       {!isLoading && errorMessage && <ResultAlert message={errorMessage} wasSuccessful={false} />}
-      {!isLoading && adId && <><ResultAlert message="Dein Inserat wurde erstellt" wasSuccessful={true} /><Container><AdDetail id={adId}/></Container></>}
+      {!isLoading && adId && <ResultAlert title={`Dein Inserate-Code: ${adCode}`} message={`Dein Inserat wurde erstellt. Benutze diesen Inserate-Code zum Ändern oder Löschen des Inserats.`} wasSuccessful={true} />}
+      {!isLoading && adId && emailWasSent && <ResultAlert title="Email versendet" message="Eine Email mit deinem Inserate-Code wurde soeben an deine E-Mail-Adresse gesendet" wasSuccessful={true}></ResultAlert>}
+
+      {!isLoading && adId && <Container><AdDetail id={adId}/></Container>}
+
+
       {!adId && !isLoading && 
         <form onSubmit={form.onSubmit(
             (values) => {
@@ -172,7 +208,6 @@ function CreateAd() {
               </Group> 
             </Fieldset>  
         </form>}
-
       </>
     )
 }

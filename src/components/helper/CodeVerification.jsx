@@ -4,7 +4,6 @@ import { useForm, hasLength } from "@mantine/form";
 import ResultAlert from "./ResultAlert";
 
 
-
 function CodeVerification( { setAdId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
@@ -32,7 +31,7 @@ function getAdID( code ) {
           // if res.ok false - keine abfrage, try again
           // if data.result = 0 -> kein inserat gefunden, nochmal versuchen
           // maximal anzahl versuche?
-          if(!res.ok) throw new Error("Etwas ist schiefgelaufen beim Abfragen des Inserates. Bitte versuche es noch einmal.");
+          if(!res.ok) throw new Error("Das Inserat konnte nicht gefunden werden. Bitte versuche es noch einmal.");
           if(data.results === 0) throw new Error("Es konnte kein Inserat mit diesem Code gefunden werden.");
 
           const id = data.data.ads[0]._id;
@@ -48,7 +47,7 @@ function getAdID( code ) {
 }
     return (
       <>
-      {!isLoading && errorMessage && <ResultAlert message={errorMessage} wasSuccessful={false} />}
+      {!isLoading && errorMessage && <ResultAlert icon="error" title="Etwas ist schief gelaufen" message={errorMessage} wasSuccessful={false} />}
 
       <Card style={{backgroundColor: "transparent"}} withBorder>
           <form onSubmit={form.onSubmit(

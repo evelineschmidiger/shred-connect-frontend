@@ -24,7 +24,7 @@ function DeleteAd( { id, setIsDeleted}) {
               headers: {"Content-Type": "application/json"}
               });
 
-            if(!res.ok) throw new Error("Etwas ist schiefgelaufen beim Löschen des Inserates. Bitte versuche es noch einmal");
+            if(!res.ok) throw new Error("Das Inserat konnte nicht gelöscht werden. Bitte versuche es noch einmal.");
             setStatus("success");
             setIsDeleted(true);
           } catch (err) {
@@ -40,7 +40,7 @@ function DeleteAd( { id, setIsDeleted}) {
 
     return (
           <Stack>
-            {status !== "pending" && !isLoading && <ResultAlert message={(errorMessage) ? errorMessage : "Dein Inserat wurde gelöscht"} wasSuccessful={status === "success"}/>}
+            {status !== "pending" && !isLoading && <ResultAlert icon={errorMessage ? "error" : "check"} title={errorMessage ? "Etwas ist schief gelaufen" : "Erledigt"} message={(errorMessage) ? errorMessage : "Dein Inserat wurde gelöscht"} wasSuccessful={status === "success"}/>}
             {(status === "pending" || status === "fail") && !isLoading && <Button onClick={open}>Jetzt löschen</Button>}
             <Dialog withBorder color="blue" opened={opened} position={{ bottom: 20, right: 20 }} withCloseButton onClose={close} size="lg" radius="md">
               <Stack>

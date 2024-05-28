@@ -215,8 +215,8 @@ function UpdateAd( { id, setIsUpdated }) {
                 </form>
             </Stack>
         }
-        {status === "success" && !isLoading && <ResultAlert message="Dein Inserat wurde geändert" wasSuccessful={true}></ResultAlert>}
-        {status === "fail" && !isLoading && <ResultAlert message="Das Ändern des Inserates hat nicht funktioniert. Bitte versuche es noch einmal." wasSuccessful={false}></ResultAlert>}
+        {status === "success" && !isLoading && <ResultAlert icon="check" title="Erledigt" message="Dein Inserat wurde geändert" wasSuccessful={true}></ResultAlert>}
+        {status === "fail" && !isLoading && <ResultAlert icon="error" title="Etwas ist schief gelaufen" message="Das Ändern des Inserates hat nicht funktioniert. Bitte versuche es noch einmal." wasSuccessful={false}></ResultAlert>}
 
       </>
     )

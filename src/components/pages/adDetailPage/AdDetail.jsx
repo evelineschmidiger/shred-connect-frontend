@@ -3,10 +3,11 @@ import { Stack, Loader, Text, Card, Container, Image, Title, Divider } from '@ma
 
 import BadgeGroup from '../../helper/BadgeGroup';
 
-function AdDetail({ id }) {
+function AdDetail({ id, ad, setAd }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [ad, setAd] = useState("");
+
+
 
 
 

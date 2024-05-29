@@ -38,7 +38,7 @@ function CreateAd() {
     
 
 
-    function makePostRequest(values) {
+    function createAd(values) {
       const { email, bandname, beschreibung, style, instrument, canton, image } = values;
       const bodyObject = {
         name: bandname,
@@ -50,7 +50,7 @@ function CreateAd() {
         image
       }
 
-      async function postAd() {
+      async function makePostRequest() {
         try {
           setIsLoading(true);
           setErrorMessage("");
@@ -81,7 +81,7 @@ function CreateAd() {
           setIsLoading(false);
         }
       }
-      postAd();
+      makePostRequest();
     }
 
 
@@ -119,14 +119,12 @@ function CreateAd() {
       {!isLoading && errorMessage && <ResultAlert icon="error" message={errorMessage} wasSuccessful={false} />}
       {!isLoading && adId && <ResultAlert title={`Dein Inserate-Code: ${adCode}`} icon="notification" message={`Dein Inserat wurde erstellt. Benutze diesen Inserate-Code zum Ändern oder Löschen des Inserats.`} wasSuccessful={true} />}
       {!isLoading && adId && emailWasSent && <ResultAlert title="Email versendet" icon="mail" message="Eine Email mit deinem Inserate-Code wurde soeben an deine Email-Adresse gesendet" wasSuccessful={true}></ResultAlert>}
-
       {!isLoading && adId && <Container><AdDetail id={adId}/></Container>}
-
 
       {!adId && !isLoading && 
         <form onSubmit={form.onSubmit(
             (values) => {
-            makePostRequest(values);
+            createAd(values);
             })
            }>
             <Fieldset disabled={isLoading && true} >  

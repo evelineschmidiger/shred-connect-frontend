@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { PinInput, Space, Container, Text, Fieldset, Button, Card } from '@mantine/core';
+import { useState } from "react";
+import { PinInput, Space, Text, Fieldset, Button, Card } from '@mantine/core';
 import { useForm, hasLength } from "@mantine/form";
-import ResultAlert from "./ResultAlert";
+import ResultAlert from "../../../reusable/ResultAlert";
 
 
-function CodeVerification( { setAdId }) {
+function CodeVerification( { setAd, setAdId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
 
@@ -19,23 +19,24 @@ function CodeVerification( { setAdId }) {
         },
       });
 
-function getAdID( code ) {
 
-    async function fetchAdByID() {
 
+
+function getAd( code ) {
+
+    async function fetchAdByCode() {
         try {
           setIsLoading(true);
           setErrorMessage("");
-          const res = await fetch(`http://localhost:7777/api/adverts?code=${code}&fields=_id`);
+          const res = await fetch(`http://localhost:7777/api/adverts?code=${code}`);
           const data = await res.json();
           // if res.ok false - keine abfrage, try again
           // if data.result = 0 -> kein inserat gefunden, nochmal versuchen
           // maximal anzahl versuche?
           if(!res.ok) throw new Error("Das Inserat konnte nicht gefunden werden. Bitte versuche es noch einmal.");
           if(data.results === 0) throw new Error("Es konnte kein Inserat mit diesem Code gefunden werden.");
-
-          const id = data.data.ads[0]._id;
-          setAdId(id);
+          setAd(data.data.ads[0]);
+          setAdId(data.data.ads[0]._id)
 
         } catch (err) {       
             setErrorMessage(err.message);
@@ -43,7 +44,7 @@ function getAdID( code ) {
           setIsLoading(false);
         }
       }
-      fetchAdByID();
+      fetchAdByCode();
 }
     return (
       <>
@@ -52,7 +53,7 @@ function getAdID( code ) {
       <Card style={{backgroundColor: "transparent"}} withBorder>
           <form onSubmit={form.onSubmit(
               (code) => {
-              getAdID(code.code);
+              getAd(code.code);
               })
           }>
               
@@ -69,11 +70,8 @@ function getAdID( code ) {
                     key={form.key("code")}
                     {...form.getInputProps("code")}
                 />
-
-                <Space h="xl"/>
-              
+                <Space h="xl"/>  
                 <Button type="submit">Code überprüfen</Button>
-
                 <Space h="md"/>
             
               </Fieldset>  

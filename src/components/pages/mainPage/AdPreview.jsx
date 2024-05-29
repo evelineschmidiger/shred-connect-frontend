@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Image, Stack, Badge, Card, Group, Title, Divider } from '@mantine/core';
 
-import BadgeGroup from "../../helper/BadgeGroup.jsx";
+import BadgeGroup from '../../reusable/BadgeGroup';
 
 
 function AdPreview({ ad }) {

@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { Button, Fieldset, Checkbox, Stack, Flex, Switch, Group, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Title } from "@mantine/core";
+import { Button, Fieldset, Checkbox, Stack, Flex, Group, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Title } from "@mantine/core";
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
-import RadioImages from "../../helper/RadioImages.jsx";
+import RadioImages from "../../../../reusable/RadioImages.jsx";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../../data/data.js";
-import ResultAlert from "../../../../helper/ResultAlert.jsx";
+import ResultAlert from "../../../../reusable/ResultAlert.jsx";
 
 
-function UpdateAd( { id, setIsUpdated }) {
+function UpdateAd( { id, setIsUpdated, ad, setAd }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [status, setStatus] = useState("pending"); // pending, success, fail
-    const [ad, setAd] = useState("");
+    
     const [value, setValue] = useState([]);
 
     //const valueCopy = [...value]
@@ -42,7 +42,7 @@ function UpdateAd( { id, setIsUpdated }) {
     const pictureNumbers = Array.from(Array(17), (_, i) => (`0${i+1}`).length === 2 ? `0${i+1}` : `${i+1}`);
 
 
-    // Post-Request on mount to get ad values 
+    // on mount and when status changes to get ad values and force adDetail component to directly rerender
     useEffect(function() {
       const controller = new AbortController();
       async function fetchAdByID() {
@@ -59,7 +59,7 @@ function UpdateAd( { id, setIsUpdated }) {
         } 
       }
       fetchAdByID();
-    }, [id])
+    }, [id, status])
 
   // set defaultValues when ad state changes (when it was fetched)
   // Do not add "form" in dependency array!
@@ -107,6 +107,7 @@ function UpdateAd( { id, setIsUpdated }) {
     }, {})
 
 
+    setIsUpdated(false);
       async function makePatchRequest() {
           try {
           setIsLoading(true);

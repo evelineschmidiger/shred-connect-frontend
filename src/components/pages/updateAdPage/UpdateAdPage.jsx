@@ -7,7 +7,6 @@ import { Container, Stack, Title, Button, SegmentedControl } from '@mantine/core
 export default function UpdateAdPage() {
     const [value, setValue] = useState('create');
     
-    
     const navigate = useNavigate();
 
     useEffect(function() {

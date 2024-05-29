@@ -1,18 +1,19 @@
 
 import { useState } from "react";
-import { TextInput, MultiSelect, Loader,Container, Text, Image, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
+import { TextInput, MultiSelect, Loader, Card, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
-import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../data/data.js";
-import RadioImages from "../helper/RadioImages.jsx";
-import ResultAlert from "../../../helper/ResultAlert.jsx";
-import AdDetail from "../../adDetailPage/AdDetail";
+import { cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../data/data.js";
+import RadioImages from "./../../../reusable/RadioImages.jsx";
+import ResultAlert from "../../../reusable/ResultAlert.jsx";
+import AdDetail from "../../../reusable/AdDetail.jsx";
 
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [adId, setAdId] = useState("");
-    const [adCode, setAdCode] = useState("");
+    const [ad, setAd] = useState("");
     const [emailWasSent, setEmailWasSent] = useState(false);
+
+    const pictureNumbers = Array.from(Array(17), (_, i) => (`0${i+1}`).length === 2 ? `0${i+1}` : `${i+1}`);
     
     const form = useForm({
       mode: 'uncontrolled',
@@ -34,10 +35,7 @@ function CreateAd() {
       },
     });
 
-    const pictureNumbers = Array.from(Array(17), (_, i) => (`0${i+1}`).length === 2 ? `0${i+1}` : `${i+1}`);
-    
-
-
+  
     function createAd(values) {
       const { email, bandname, beschreibung, style, instrument, canton, image } = values;
       const bodyObject = {
@@ -54,25 +52,21 @@ function CreateAd() {
         try {
           setIsLoading(true);
           setErrorMessage("");
-          setAdId("")
+          setAd("")
           const response = await fetch("http://localhost:7777/api/adverts", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(bodyObject)
             })
             const body = await response.json();
+            
           
           if (!response.ok) {
             
-            if(body.status === "fail") {
-              console.log(body.message);
-            }
             throw new Error("Etwas ist schief gelaufen beim Erstellen des Inserates")
-          }      
-
-          setAdId(body.data.ad._id)
-          setAdCode(body.data.ad.code)
+          }
           sendCodeEmail(body.data.ad.code, body.data.ad.email)
+          setAd(body.data.ad)
           
         } catch (err) {
           console.log(err.message);
@@ -83,7 +77,6 @@ function CreateAd() {
       }
       makePostRequest();
     }
-
 
     function sendCodeEmail(code, email) {
 
@@ -112,16 +105,15 @@ function CreateAd() {
       postRequest();
     }
 
-
     return (
       <>
       {isLoading && <Loader></Loader>}
       {!isLoading && errorMessage && <ResultAlert icon="error" message={errorMessage} wasSuccessful={false} />}
-      {!isLoading && adId && <ResultAlert title={`Dein Inserate-Code: ${adCode}`} icon="notification" message={`Dein Inserat wurde erstellt. Benutze diesen Inserate-Code zum Ändern oder Löschen des Inserats.`} wasSuccessful={true} />}
-      {!isLoading && adId && emailWasSent && <ResultAlert title="Email versendet" icon="mail" message="Eine Email mit deinem Inserate-Code wurde soeben an deine Email-Adresse gesendet" wasSuccessful={true}></ResultAlert>}
-      {!isLoading && adId && <Container><AdDetail id={adId}/></Container>}
+      {!isLoading && ad && <ResultAlert title={`Dein Inserate-Code: ${ad.code}`} icon="notification" message={`Dein Inserat wurde erstellt. Benutze diesen Inserate-Code zum Ändern oder Löschen des Inserats.`} wasSuccessful={true} />}
+      {!isLoading && ad && emailWasSent && <ResultAlert title="Email versendet" icon="mail" message="Eine Email mit deinem Inserate-Code wurde soeben an deine Email-Adresse gesendet" wasSuccessful={true}></ResultAlert>}
+      {!isLoading && ad && <Card><AdDetail ad={ad}/></Card>}
 
-      {!adId && !isLoading && 
+      {!ad && !isLoading && 
         <form onSubmit={form.onSubmit(
             (values) => {
             createAd(values);
@@ -146,7 +138,6 @@ function CreateAd() {
                   key={form.key("bandname")}
                   {...form.getInputProps("bandname")}
               />
-
 
               <Textarea
                   label="Inserate-Text"
@@ -198,7 +189,6 @@ function CreateAd() {
               >
                   <Flex wrap="wrap">
                     {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
-                      
                   </Flex>
               </Radio.Group> 
 

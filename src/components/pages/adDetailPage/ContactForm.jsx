@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import { TextInput, Stack, Textarea, Fieldset, Button, Group } from '@mantine/core';
-import ResultAlert from '../../helper/ResultAlert';
+import ResultAlert from '../../reusable/ResultAlert';
 
 
 function ContactForm( { adName, adCreatedAt, adId }) {
@@ -65,7 +65,7 @@ function ContactForm( { adName, adCreatedAt, adId }) {
         <>
         <Stack>
         {errMessage && !emailWasSent && <ResultAlert title="Etwas ist schief gelaufen" icon="error" message={`Deine Nachricht an ${adName} konnte nicht gesendet werden. Bitte versuche es noch einmal`} wasSuccessful={false}></ResultAlert>}
-        {!errMessage && emailWasSent && <ResultAlert title="Versendet" icon="mail"  message={`Deine Nachricht wurde an ${adName} gesendet.`} wasSuccessful={true} />}
+        {!errMessage && emailWasSent && <ResultAlert title="Versendet" icon="mail" message={`Deine Nachricht wurde an ${adName} gesendet.`} wasSuccessful={true} />}
         {!errMessage && !emailWasSent &&
              <form onSubmit={form.onSubmit(
                 (values) => {

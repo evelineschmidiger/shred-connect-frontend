@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Stack, Loader, Dialog, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import ResultAlert from "../../../../helper/ResultAlert";
+import ResultAlert from "../../../../reusable/ResultAlert";
 
 
 function DeleteAd( { id, setIsDeleted}) {

@@ -13,6 +13,7 @@ function DeleteAd( { id, setIsDeleted}) {
 
 
 
+
     function deleteRequest(id) {
 
         async function deleteAdByID() {

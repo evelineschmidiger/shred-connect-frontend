@@ -40,7 +40,7 @@ function AdList( { query, setPaginationQuery, filterQuery }) {
 
     return (
       <Container style={{paddingTop: "40px"}} size="lg">
-        <Paper p="xs" ml="20" mr="20" style={{background: "radial-gradient(circle, var(--mantine-color-cyan-9) 4%, var(--mantine-color-blue-9) 100%)"}}><Title order={5}>Es wurden {adTotal === 0 ? "keine" : adTotal} Inserate gefunden</Title></Paper>
+        <Paper p="xs" ml="20" mr="20" withBorder={true} style={{background: "var(--mantine-color-dark-6)"}}><Title order={5}>Es wurden {adTotal === 0 ? "keine" : adTotal} Inserate gefunden</Title></Paper>
         <Space h="xl"></Space>
 
         <Container fluid>

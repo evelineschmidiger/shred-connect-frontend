@@ -1,17 +1,23 @@
 
 import { useState } from "react";
-import { TextInput, MultiSelect, Loader, Card, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
+import { TextInput, Text, MultiSelect, Loader, Card, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import { cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../data/data.js";
 import RadioImages from "./../../../reusable/RadioImages.jsx";
 import ResultAlert from "../../../reusable/ResultAlert.jsx";
 import AdDetail from "../../../reusable/AdDetail.jsx";
+import socket from "./../../../../socket.js"
+
+
+
 
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [ad, setAd] = useState("");
     const [emailWasSent, setEmailWasSent] = useState(false);
+
+
 
     const pictureNumbers = Array.from(Array(17), (_, i) => (`0${i+1}`).length === 2 ? `0${i+1}` : `${i+1}`);
     
@@ -27,7 +33,7 @@ function CreateAd() {
       },
       validate: {
         email: (value) => (/^\S+@\S+$/.test(value) ? null : "Ungültige E-Mailadresse"),
-        bandname: hasLength({ min: 2, max: 15 }, "Der Bandname sollte mindestens 2, maximal 15 Buchstaben haben"),
+        bandname: hasLength({ min: 2, max: 25 }, "Der Bandname sollte mindestens 2, maximal 25 Buchstaben haben"),
         beschreibung: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
         instrument: isNotEmpty("Bitte füge ein Instrument hinzu"),
         canton: isNotEmpty("Bitte füge einen Kanton hinzu"),
@@ -67,6 +73,9 @@ function CreateAd() {
           }
           sendCodeEmail(body.data.ad.code, body.data.ad.email)
           setAd(body.data.ad)
+          socket.emit("created", body.data.ad)
+          
+          //socket.emit("created", `Ein neues Inserat für die Band ${body.data.ad.name} wurde soeben erstellt. Sie suchen unter anderem folgende Instrumente: ${body.data.ad.instrument[0]}`)
           
         } catch (err) {
           console.log(err.message);

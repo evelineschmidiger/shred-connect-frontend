@@ -2,6 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { createTheme, MantineProvider, rem } from '@mantine/core';
+import { AppShell, Space, Group, Text, Button, Notification } from '@mantine/core';
+
+
+
+import { Notifications } from '@mantine/notifications';
 import "@mantine/core/styles.css";
 
 const theme = createTheme({
@@ -23,6 +28,7 @@ const theme = createTheme({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <MantineProvider theme={theme} defaultColorScheme="dark">
+    <Notifications position="top-right" containerWidth={390}><Button>lgl</Button></Notifications>
     <React.StrictMode>
       <App />
     </React.StrictMode>

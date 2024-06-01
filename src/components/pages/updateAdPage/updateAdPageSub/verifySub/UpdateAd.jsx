@@ -4,6 +4,10 @@ import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import RadioImages from "../../../../reusable/RadioImages.jsx";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../../data/data.js";
 import ResultAlert from "../../../../reusable/ResultAlert.jsx";
+import socket from "./../../../../../socket.js"
+
+
+
 
 
 function UpdateAd( { id, setIsUpdated, ad, setAd }) {
@@ -12,6 +16,7 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
     const [status, setStatus] = useState("pending"); // pending, success, fail
     
     const [value, setValue] = useState([]);
+    console.log(value);
 
     //const valueCopy = [...value]
     //const initialFormValuesObject = valueCopy.reduce((acc, cur) => ({ ...acc, [cur]: (cur === "instrument") || (cur === "style") ? [] : ""}), {})
@@ -26,10 +31,10 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
     const fullFormValidationObject = {
               name: hasLength({ min: 2, max: 25 }, "Der Bandname sollte mindestens 2, maximal 25 Buchstaben haben"),
               message: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
-              instrument: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
+              instrument: isNotEmpty("Bitte füge mindestens 1 Instrument hinzu"),
               canton: isNotEmpty("Bitte füge einen Kanton hinzu"),
               style: isNotEmpty("Bitte füge mindestens 1 Style-Tag hinzu"),
-              image: isNotEmpty("Bitte füge mindestens 1 Style-Tag hinzu")
+              image: isNotEmpty("Bitte füge mindestens 1 Bild hinzu")
             }
 
 
@@ -124,6 +129,7 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
           if(!response.ok) throw new Error(errorMessage);
           setStatus("success");
           setIsUpdated(true);
+          socket.emit("updated", body.data.ad)
 
           } catch (err) {
           setErrorMessage(err.message);
@@ -208,7 +214,7 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
                 
                           <Group justify="flex-start" mt="md">
                               <Button type="submit">Inserat ändern</Button>
-                          </Group> 
+                          </Group>
     
     
                     </Fieldset> 

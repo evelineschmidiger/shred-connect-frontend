@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Center,  Loader, Flex, Container, Title } from '@mantine/core';
+import { Center,  Loader, Flex, Container, Title, Space, Paper } from '@mantine/core';
 import AdPreview from './AdPreview';
 import AdPagination from './AdPagination';
 
@@ -39,15 +39,17 @@ function AdList( { query, setPaginationQuery, filterQuery }) {
 
 
     return (
-      <Container style={{paddingTop: "40px"}} fluid>
-        <Title order={3}>{adTotal} Inserate</Title>
+      <Container style={{paddingTop: "40px"}} size="lg">
+        <Paper p="xs" ml="20" mr="20" style={{background: "radial-gradient(circle, var(--mantine-color-cyan-9) 4%, var(--mantine-color-blue-9) 100%)"}}><Title order={5}>Es wurden {adTotal === 0 ? "keine" : adTotal} Inserate gefunden</Title></Paper>
+        <Space h="xl"></Space>
+
         <Container fluid>
             {isLoading && <Loader />}
             {errorMessage && <Title order={4}>{errorMessage}</Title>}
             {!isLoading && !errorMessage && 
             <Flex
             mih={80}
-            gap="md"
+            gap="xs"
             justify="center"
             align="flex-start"
             direction="row"
@@ -57,6 +59,8 @@ function AdList( { query, setPaginationQuery, filterQuery }) {
             </Flex>
             }
         </Container>
+        
+        <Space h="xl"></Space>
         <Center>
             <AdPagination setPaginationQuery={setPaginationQuery} filterQuery={filterQuery} adTotal={adTotal} />
         </Center>

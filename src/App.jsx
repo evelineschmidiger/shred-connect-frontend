@@ -1,31 +1,32 @@
 import { BrowserRouter , Route, Routes, Navigate} from "react-router-dom";
-import { AppShell } from '@mantine/core';
+import { AppShell, Space } from '@mantine/core';
 import AdDetailPage from "./components/pages/adDetailPage/AdDetailPage.jsx";
 import UpdateAdPage from "./components/pages/updateAdPage/UpdateAdPage.jsx";
 import MainPage from "./components/pages/mainPage/MainPage.jsx";
 import CreateAd from "./components/pages/updateAdPage/updateAdPageSub/CreateAd.jsx";
 import Verify from "./components/pages/updateAdPage/updateAdPageSub/Verify.jsx";
 import PageNotFound from "./components/PageNotFound.jsx";
-import Header from "./components/Header.jsx";
-import Navigation from "./components/Navigation.jsx";
+
 
 import "@mantine/core/styles.css";
 import './App.css'
-
+import Navigation from "./components/Navigation.jsx";
 
 export default function App() {
   
   return (
     <BrowserRouter>
       <AppShell 
-        header={{ height: 150 }}
-        padding="lg"
+        header={{ height: 68 }}
+        padding="xl"
       >
 
-        <AppShell.Header>
+        <AppShell.Header style={{background: "radial-gradient(circle, var(--mantine-color-cyan-9) 4%, var(--mantine-color-blue-9) 100%)"}}>
           <Navigation />
-          <Header />
         </AppShell.Header>
+
+        <Space h="xl"></Space>
+        <Space h="xl"></Space>
 
         <AppShell.Main>
           <Routes>
@@ -38,12 +39,6 @@ export default function App() {
               <Route path="verify" element={<Verify/>} />
             </Route>
             
-            {/*
-             /create - route: Redirecting when ad changed or updated to mainpage 
-             / when successfully updated: set state to success = true
-             // false: display error alert
-             <Route path="/redirect" element={success && <Navigate to="/"/>} />
-             */}
              <Route path="/redirect" element={<Navigate to="/"/>} />
              <Route path="*" element={<PageNotFound/>}/>
           </Routes>

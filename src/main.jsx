@@ -6,15 +6,12 @@ import "@mantine/core/styles.css";
 
 const theme = createTheme({
   // scale: 0.9,
-  headings: {
-    sizes: {
-      h1: {
-        fontSize: rem(40)
-      },
-      h2: {
-        fontSize: rem(30)
-      }
-    }
+  fontFamily: "Verdana, sans-serif",
+  defaultGradient: {
+    from: "var(--mantine-color-blue-9)",
+    //to: "var(--mantine-color-blue-8)",
+    to: "var(--mantine-color-cyan-9)",
+    deg: 90,
   },
   // fontFamily: string;
   // default border radius

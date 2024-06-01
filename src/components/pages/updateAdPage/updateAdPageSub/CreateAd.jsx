@@ -27,7 +27,7 @@ function CreateAd() {
       },
       validate: {
         email: (value) => (/^\S+@\S+$/.test(value) ? null : "Ungültige E-Mailadresse"),
-        bandname: hasLength({ min: 2, max: 25 }, "Der Bandname sollte mindestens 2, maximal 25 Buchstaben haben"),
+        bandname: hasLength({ min: 2, max: 15 }, "Der Bandname sollte mindestens 2, maximal 15 Buchstaben haben"),
         beschreibung: isNotEmpty("Bitte füge eine Beschreibung hinzu"),
         instrument: isNotEmpty("Bitte füge ein Instrument hinzu"),
         canton: isNotEmpty("Bitte füge einen Kanton hinzu"),

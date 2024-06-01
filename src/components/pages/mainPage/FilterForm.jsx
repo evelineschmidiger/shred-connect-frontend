@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {  NativeSelect, MultiSelect, Fieldset } from '@mantine/core';
+import {  NativeSelect, MultiSelect, Fieldset, Container } from '@mantine/core';
 
 import {cantons, instruments, styles} from "../../../data/data.js";
 
@@ -24,33 +24,36 @@ function FilterForm({ setFilterQuery}) {
 
  
     return (
-        <Fieldset legend="Inserate filtern">
-            <NativeSelect 
-            label="Instrument" 
-            description="Wähle ein Instrument" 
-            data={instruments} 
-            onChange={(event) => setInstrument(event.currentTarget.value)}
-            />
+        <Container size="lg">
+            <Fieldset legend="Inserate filtern">
+                <NativeSelect 
+                label="Instrument" 
+                description="Wähle ein Instrument" 
+                data={instruments} 
+                onChange={(event) => setInstrument(event.currentTarget.value)}
+                />
 
-            <MultiSelect
-            label="Kanton"
-            placeholder="Wähle einen oder mehrere Kantone"
-            value={cantonArray}
-            data={cantons}
-            onChange={setCantonArray}
-            searchable
-            hidePickedOptions
-            clearable
-            />
+                <MultiSelect
+                label="Kanton"
+                placeholder="Wähle einen oder mehrere Kantone"
+                value={cantonArray}
+                data={cantons}
+                onChange={setCantonArray}
+                searchable
+                hidePickedOptions
+                clearable
+                />
 
-            <NativeSelect
-            label="Stil"
-            placeholder="Wähle einen Stil"
-            value={style}
-            data={styles}
-            onChange={(event) => setStyle(event.currentTarget.value)}
-            />
-        </Fieldset>  
+                <NativeSelect
+                label="Stil"
+                placeholder="Wähle einen Stil"
+                value={style}
+                data={styles}
+                onChange={(event) => setStyle(event.currentTarget.value)}
+                />
+            </Fieldset>
+        </Container>
+
     )
     }
 

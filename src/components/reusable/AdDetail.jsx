@@ -4,6 +4,8 @@ import BadgeGroup from './BadgeGroup';
 
 function AdDetail({ ad }) {
 
+
+
   const created = ad.createdAt && formatDate(ad.createdAt);
   const updated = ad.lastUpdatedAt && formatDate(ad.lastUpdatedAt);
 
@@ -17,10 +19,9 @@ function AdDetail({ ad }) {
               <Title order={3}>{ad.name}</Title>
               <Image
                 src={`/${ad.image}.jpg` || "/choice_14.jpg"}
-                height={120}
                 alt="Live Musician"
               />   
-              <Text>
+              <Text mt="md" lh="1.8" fz=".9rem">
               {ad.message}
               </Text>
               <Stack>
@@ -41,14 +42,14 @@ function AdDetail({ ad }) {
               {created && 
               <Stack>
                 <Divider size="xs" label="Erstellt am" labelPosition="left" />
-                <Text>{created}</Text>
+                <Text tt="uppercase" fz=".9rem">{created}</Text>
               </Stack>
               }
 
               {updated && 
               <Stack>
                 <Divider size="xs" label="Letztes Update" labelPosition="left" />
-                <Text>{updated}</Text>
+                <Text tt="uppercase" fz=".9rem">{updated}</Text>
               </Stack>
               }
             </Stack>

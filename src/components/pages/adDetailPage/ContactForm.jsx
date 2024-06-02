@@ -4,7 +4,7 @@ import { TextInput, Stack, Textarea, Fieldset, Button, Group } from '@mantine/co
 import ResultAlert from '../../reusable/ResultAlert';
 
 
-function ContactForm( { adName, adCreatedAt, adId }) {
+function ContactForm( { isSmallTablet, adName, adCreatedAt, adId }) {
     const[emailWasSent, setEmailWasSent] = useState(false);
     const[errMessage, setErrMessage] = useState(false);
 
@@ -63,7 +63,7 @@ function ContactForm( { adName, adCreatedAt, adId }) {
 
     return (
         <>
-        <Stack>
+        <Stack style={isSmallTablet ? {} : {flex: "1 1 0", width: "0"}}>
         {errMessage && !emailWasSent && <ResultAlert title="Etwas ist schief gelaufen" icon="error" message={`Deine Nachricht an ${adName} konnte nicht gesendet werden. Bitte versuche es noch einmal`} wasSuccessful={false}></ResultAlert>}
         {!errMessage && emailWasSent && <ResultAlert title="Versendet" icon="mail" message={`Deine Nachricht wurde an ${adName} gesendet.`} wasSuccessful={true} />}
         {!errMessage && !emailWasSent &&

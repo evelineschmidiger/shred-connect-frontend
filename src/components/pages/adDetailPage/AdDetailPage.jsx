@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useParams, useNavigate } from "react-router";
-import {  Button, Container, Group, Card, Title, Loader } from '@mantine/core';
 
+import { useParams, useNavigate } from "react-router";
+import { Container, Group, Card, Title, Loader, Flex } from '@mantine/core';
 import ContactForm from './ContactForm';
 import AdDetail from '../../reusable/AdDetail';
 import { useFetchAdById } from '../../../hooks/useFetchAdById';
+import { useMediaQuery } from "@mantine/hooks";
 
 
 
@@ -12,21 +12,18 @@ import { useFetchAdById } from '../../../hooks/useFetchAdById';
 export default function AdDetailPage() {
   const { id } = useParams();
   const { ad, isLoading, errorMessage} = useFetchAdById(id);
+  const isSmallTablet = useMediaQuery(`(max-width: 780px)`);
 
     return (
-        <Container>
-
-          <Group justify="center" align="start" grow gap="lg">
-            <Card>
-              {isLoading && <Loader />}
-              {errorMessage && <Title order={4}>{errorMessage}</Title>}
-              {!isLoading && !errorMessage && ad && <AdDetail ad={ad}/>}
-            </Card>
-            <ContactForm adCreatedAt={ad.createdAt} adName={ad.name} adId={ad._id}/>
-          </Group>
-
-          {/* <Button onClick={() => navigate(-1)}>Zurück</Button> */}
-          
+        <Container size="xl">
+          <Flex direction={isSmallTablet ? "column" : "row"} justify="center" align="start" gap="lg">
+              <Card style={isSmallTablet ? {} : {flex: "1 1 0", width: "0"}}>
+                {isLoading && <Loader />}
+                {errorMessage && <Title order={4}>{errorMessage}</Title>}
+                {!isLoading && !errorMessage && ad && <AdDetail ad={ad}/>}
+              </Card >
+              <ContactForm isSmallTablet={isSmallTablet} adCreatedAt={ad.createdAt} adName={ad.name} adId={ad._id}/>
+          </Flex>
         </Container>
     )
   }

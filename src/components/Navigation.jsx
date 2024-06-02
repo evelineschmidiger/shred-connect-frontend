@@ -10,7 +10,7 @@ function Navigation() {
                 <Group gap="xs" wrap="nowrap" >
                     <Image w="auto" fit="contain" h={30} src="/public/guitar1.svg">
                     </Image>
-                    <Title fz="1.3rem" fw={600} variant="gradient" gradient={{ from: "var(--mantine-color-blue-9)", to: "var(--mantine-color-teal-9)", deg: 90 }}>SHRED-CONNECT</Title>
+                    <Title fz="1.2rem" fw={600} variant="gradient" gradient={{ from: "var(--mantine-color-blue-9)", to: "var(--mantine-color-teal-9)", deg: 90 }}>SHRED-CONNECT</Title>
                 </Group> 
             </Link>
 
@@ -19,7 +19,7 @@ function Navigation() {
                 <HoverCard width={280}>
                     <HoverCard.Target>
                         <Link style={{textDecoration: "none", boxShadow: "none"}} to="/update">
-                            <ActionIcon size="2.4rem" variant="filled" style={{color: "var(--mantine-color-blue-1)", backgroundColor: "var(--mantine-color-blue-6)"}}><IconEdit h="30px"></IconEdit></ActionIcon>
+                            <ActionIcon size="2.3rem" variant="filled" style={{color: "var(--mantine-color-blue-1)", backgroundColor: "var(--mantine-color-blue-8)"}}><IconEdit stroke={1.5} style={{ width: "1.7rem", height: "1.7rem" }}></IconEdit></ActionIcon>
                         </Link>
                     </HoverCard.Target>
                     <HoverCard.Dropdown>

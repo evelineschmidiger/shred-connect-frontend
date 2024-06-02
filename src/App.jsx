@@ -77,6 +77,7 @@ export default function App() {
 
         <Space h="xl"></Space>
         <Space h="xl"></Space>
+        <Space h="xl"></Space>
 
         <AppShell.Main>
        {/* <Notification></Notification> */}

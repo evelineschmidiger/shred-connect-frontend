@@ -152,6 +152,9 @@ function CreateAd() {
                   label="Inserate-Text"
                   description="Beschreibe wer ihr seid und was ihr sucht"
                   placeholder="Dein Text"
+                  autosize
+                  minRows={3}
+                  maxRows={8}
                   withAsterisk
                   key={form.key("beschreibung")}
                   {...form.getInputProps("beschreibung")}
@@ -171,7 +174,7 @@ function CreateAd() {
 
               <NativeSelect
               label="Kanton"
-              description="Wähle einen oder mehrere Kantone"
+              description="Wähle einen Kanton"
               data={cantons}
               withAsterisk
               key={form.key("canton")}
@@ -180,7 +183,7 @@ function CreateAd() {
 
               <MultiSelect
               label="Stil"
-              description="Wähle mindestens 1 und maximal 4 Style-Tags die euren Stil am besten beschreiben aus"
+              description="Wähle mindestens 1 und maximal 4 Style-Tags aus"
               data={styles}
               maxValues={4}
               searchable

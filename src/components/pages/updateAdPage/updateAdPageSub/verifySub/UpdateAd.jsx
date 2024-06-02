@@ -160,22 +160,31 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
                     updateAd(values);
                     })
                 }>
-                    <Fieldset disabled={isLoading && true} >  
+                    <Fieldset disabled={isLoading && true} variant="unstyled"> 
+                      <Stack>
     
                             {value.includes("name") && <TextInput
+                            label="Bandname"
+                            description="Wie heisst ihr?"
                             placeholder="Bandname"
                             key={form.key("name")}
                             {...form.getInputProps("name")}
                             />}
     
                             {value.includes("message") && <Textarea
-                            placeholder="Beschreibung"
+                            label="Inserate-Text"
+                            description="Beschreibe wer ihr seid und was ihr sucht"
+                            placeholder="Dein Text"
+                            autosize
+                            minRows={2}
+                            maxRows={5}
                             key={form.key("message")}
                             {...form.getInputProps("message")}
                             />}
     
                             {value.includes("instrument") && <MultiSelect
-                            placeholder="Wähle mindestens 1 und maximal 4 Instrumente"
+                            label="Instrument" 
+                            description="Wähle mindestens 1 und maximal 4 Instrumente"
                             maxValues={4}
                             searchable
                             hidePickedOptions
@@ -185,14 +194,16 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
                             />}
     
                             {value.includes("canton") && <NativeSelect
-                            description="Wähle einen oder mehrere Kantone"
+                            label="Kanton"
+                            description="Wähle einen Kanton"
                             data={cantons}
                             key={form.key("canton")}
                             {...form.getInputProps("canton")}
                             />}
     
                             {value.includes("style") && <MultiSelect
-                            description="Wähle mindestens 1 und maximal 4 Style-Tags die euren Stil am besten beschreiben aus"
+                            label="Stil"
+                            description="Wähle mindestens 1 und maximal 4 Style-Tags aus"
                             data={styles}
                             maxValues={4}
                             searchable
@@ -211,14 +222,10 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
                                 {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
                             </Flex>
                             </Radio.Group>}
-                
-                          <Group justify="flex-start" mt="md">
-                              <Button type="submit">Inserat ändern</Button>
-                          </Group>
-    
-    
-                    </Fieldset> 
-    
+                          </Stack>
+                      </Fieldset> 
+                  <Button mt="xl" size="md" type="submit">Inserat ändern</Button>
+  
                 </form>
             </Stack>
         }

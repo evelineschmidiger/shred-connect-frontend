@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import {  NativeSelect, MultiSelect, Fieldset, Container } from '@mantine/core';
+import {  NativeSelect, MultiSelect, Fieldset, Container, Paper, Title, Mark } from '@mantine/core';
 
 import {cantons, instruments, styles} from "../../../data/data.js";
 
-function FilterForm({ setFilterQuery}) {
+function FilterForm({ setFilterQuery, adTotal, setAdTotal}) {
     const [instrument, setInstrument] = useState("Alle Instrumente");
     const [cantonArray, setCantonArray] = useState([]);
     const [style, setStyle] = useState("Alle Stile");
@@ -16,7 +16,7 @@ function FilterForm({ setFilterQuery}) {
 
     // chain Filterform-Queries, Bsp: instrument=Gesang&canton=Aargau&canton=Bern
     const filterFormQuery = `${instrumentFilterQuery}${(cantonFilterQuery && instrumentFilterQuery) && "&"}${cantonFilterQuery}${(styleFilterQuery && cantonFilterQuery || styleFilterQuery && instrumentFilterQuery) && "&"}${styleFilterQuery}`;
-    // console.log("FilterFormQuery:", filterFormQuery);
+
 
     useEffect(function() {
         setFilterQuery(filterFormQuery);
@@ -51,7 +51,10 @@ function FilterForm({ setFilterQuery}) {
                 data={styles}
                 onChange={(event) => setStyle(event.currentTarget.value)}
                 />
+
+                <Title fz="1rem" pt="lg" pb="2" order={6}>Es wurden {adTotal === 0 ? "keine" : adTotal} Inserate gefunden</Title>
             </Fieldset>
+
         </Container>
 
     )

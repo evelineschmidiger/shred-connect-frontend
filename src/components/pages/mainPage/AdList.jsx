@@ -3,11 +3,10 @@ import { Center,  Loader, Flex, Container, Title, Space, Paper } from '@mantine/
 import AdPreview from './AdPreview';
 import AdPagination from './AdPagination';
 
-function AdList( { query, setPaginationQuery, filterQuery }) {
+function AdList( { query, setPaginationQuery, filterQuery, adTotal, setAdTotal }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [ads, setAds] = useState([]);
-    const [adTotal, setAdTotal] = useState(0);
 
 
     useEffect(function() {
@@ -40,7 +39,6 @@ function AdList( { query, setPaginationQuery, filterQuery }) {
 
     return (
       <Container style={{paddingTop: "40px"}} size="lg">
-        <Paper p="xs" ml="20" mr="20" withBorder={true} style={{background: "var(--mantine-color-dark-6)"}}><Title order={5}>Es wurden {adTotal === 0 ? "keine" : adTotal} Inserate gefunden</Title></Paper>
         <Space h="xl"></Space>
 
         <Container fluid>

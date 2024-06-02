@@ -14,9 +14,10 @@ export default function UpdateAdPage() {
     }, [value, navigate])
 
     return (
-        <Container size="sm">
+        <Container size="lg">
             <Stack>     
-                <SegmentedControl
+                <SegmentedControl mb="50"
+                    size="md"
                     value={value}
                     onChange={setValue}
                     data={[
@@ -24,6 +25,7 @@ export default function UpdateAdPage() {
                         {label: "Inserat bearbeiten oder löschen", value: "verify"},
                     ]}
                 />
+
                 <Outlet />
             </Stack>
         

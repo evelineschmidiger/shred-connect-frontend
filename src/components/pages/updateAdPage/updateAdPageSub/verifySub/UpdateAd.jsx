@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { Button, Fieldset, Checkbox, Stack, Flex, Group, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Title, Loader } from "@mantine/core";
+import { Button, Fieldset, Checkbox, Stack, Flex, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Title, Loader } from "@mantine/core";
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import RadioImages from "../../../../reusable/RadioImages.jsx";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../../data/data.js";
 import ResultAlert from "../../../../reusable/ResultAlert.jsx";
 import socket from "./../../../../../socket.js"
-import { useMediaQuery } from "@mantine/hooks";
 
 
 function UpdateAd( { id, setIsUpdated, ad, setAd }) {
@@ -13,7 +12,6 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
     const [errorMessage, setErrorMessage] = useState("");
     const [status, setStatus] = useState("pending"); // pending, success, fail
     const [value, setValue] = useState([]);
-    const isSmall = useMediaQuery(`(max-width: 600px)`);
 
     //const valueCopy = [...value]
     //const initialFormValuesObject = valueCopy.reduce((acc, cur) => ({ ...acc, [cur]: (cur === "instrument") || (cur === "style") ? [] : ""}), {})
@@ -154,7 +152,9 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
                   </Checkbox.Group>
                   <form onSubmit={form.onSubmit(
                       (values) => {
-                      updateAd(values);
+                      if (value.length !== 0) {
+                        updateAd(values)
+                      };
                       })
                   }>
                       <Fieldset variant="unstyled"> 
@@ -210,8 +210,10 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
                               />}
       
                               {value.includes("image") && <Radio.Group
+                              label="Bild"
+                              description="Wähle ein Bild für dein Inserat"
                               justify="flex-start"
-                              mt="md"
+                              mt="0px"
                               key={form.key("image")}
                               {...form.getInputProps("image")}
                               >

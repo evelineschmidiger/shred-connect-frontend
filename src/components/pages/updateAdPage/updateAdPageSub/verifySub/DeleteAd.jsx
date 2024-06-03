@@ -40,7 +40,7 @@ function DeleteAd( { id, setIsDeleted}) {
           <Stack align="flex-start">
               {status !== "pending" && !isLoading && <ResultAlert icon={errorMessage ? "error" : "check"} title={errorMessage ? "Etwas ist schief gelaufen" : "Erledigt"} message={(errorMessage) ? errorMessage : "Dein Inserat wurde gelöscht"} wasSuccessful={status === "success"}/>}
               {(status === "pending" || status === "fail") && !isLoading && <Button mt="xl" size="md" onClick={open}>Jetzt löschen</Button>}
-              <Dialog size="md" withBorder color="blue" opened={opened} position={{ bottom: 30, right: 30 }} withCloseButton onClose={close} radius="md">
+              <Dialog bg="var(--mantine-color-dark-6)" size="md" withBorder opened={opened} position={{ bottom: 30, right: 30 }} withCloseButton onClose={close} radius="md">
                 <Stack>
                   <Text fz={{base: ".7rem", sm: ".9rem"}}>Bist du sicher, dass du dein Inserat löschen möchtest?</Text>
                   <Button fz={{base: ".6rem", sm: ".9rem"}} onClick={() => {close(); deleteRequest(id)}}>Inserat unwiderruflich löschen</Button>

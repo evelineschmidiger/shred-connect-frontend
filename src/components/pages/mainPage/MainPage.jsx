@@ -18,9 +18,9 @@ export default function MainPage() {
     
     return (
         <Container size="xl">
-{/*                 <Center pr="230" pl="230" pt="25" >
-                    <Text fz=".9rem" fs="oblique" fw={600} variant="gradient" gradient={{ from: "var(--mantine-color-blue-6)", to: "var(--mantine-color-blue-3)", deg: 90 }}>„Ursprünglich wollte ich die Band „Guns ’n Robots“ nennen. Ich glaube immer noch, dass wir immer noch zusammen wären, wenn wir uns nur „Guns ’n Robots“ genannt hätten.“ - Slash - Quelle: www.delamar.de</Text>
-                </Center> */}
+                <Center pr="230" pl="230" pt="25" >
+{/*                     <Text fz=".9rem" fs="oblique" fw={600} c="var(--mantine-color-dark-3)">Ohne Musik wäre das Leben ein Irrtum. - Friedrich Nietzsche</Text>
+ */}                </Center>
             <FilterForm filterQuery={filterQuery} setFilterQuery={setFilterQuery} adTotal={adTotal} setAdTotal={setAdTotal}/>
             <AdList query={query} filterQuery={filterQuery} setPaginationQuery={setPaginationQuery} adTotal={adTotal} setAdTotal={setAdTotal}/>
         </Container>

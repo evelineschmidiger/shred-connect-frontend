@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { Container, Stack, Title, Button, SegmentedControl } from '@mantine/core';
+import { Outlet, useParams } from "react-router-dom";
+import { Container, Stack, Tabs } from '@mantine/core';
 
 
 export default function UpdateAdPage() {
-    const [value, setValue] = useState('create');
-    
     const navigate = useNavigate();
+    const [value, setValue] = useState("")
+
+
+    useEffect(function () {
+        location.pathname.includes('/create') && setValue("create");
+        location.pathname.includes('/verify') && setValue("verify");
+    }, [])
 
     useEffect(function() {
         navigate(`${value}`)
@@ -15,18 +20,21 @@ export default function UpdateAdPage() {
 
     return (
         <Container size="lg">
-            <Stack>     
-                <SegmentedControl mb="50"
-                    size="md"
-                    value={value}
-                    onChange={setValue}
-                    data={[
-                        {label: "Inserat erstellen", value: "create"},
-                        {label: "Inserat bearbeiten oder löschen", value: "verify"},
-                    ]}
-                />
+            <Stack> 
+
+                <Tabs
+                /* value={tabValue} */
+                /* onChange={(value) => navigate(`${value}`)} */
+                value={value} onChange={setValue}
+                >
+                    <Tabs.List>
+                        <Tabs.Tab value="create">Inserat erstellen</Tabs.Tab>
+                        <Tabs.Tab value="verify">Inserat ändern oder löschen</Tabs.Tab>
+                    </Tabs.List>
+                </Tabs>
 
                 <Outlet />
+
             </Stack>
         
         </Container>

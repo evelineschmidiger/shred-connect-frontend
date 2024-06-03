@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
-import { TextInput, Stack, Textarea, Fieldset, Button, Group } from '@mantine/core';
+import { TextInput, Stack, Textarea, Fieldset, Button, Group, Loader } from '@mantine/core';
 import ResultAlert from '../../reusable/ResultAlert';
 
 
 function ContactForm( { isSmallTablet, adName, adCreatedAt, adId }) {
-    const[emailWasSent, setEmailWasSent] = useState(false);
-    const[errMessage, setErrMessage] = useState(false);
+    const [emailWasSent, setEmailWasSent] = useState(false);
+    const [errMessage, setErrMessage] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -32,8 +33,10 @@ function ContactForm( { isSmallTablet, adName, adCreatedAt, adId }) {
         setErrMessage("");
         setEmailWasSent(false);
 
+
         async function postRequest() {
             try {
+            setIsLoading(true);
             const response = await fetch(`http://localhost:7777/api/adverts/${adId}/contact`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -46,16 +49,15 @@ function ContactForm( { isSmallTablet, adName, adCreatedAt, adId }) {
                 formMessage
                 })
             })
-            
-
             if (!response.ok) {
                 console.log(response);
             throw new Error("Deine Nachricht konnte nicht versendet werden")
             }
-
             setEmailWasSent(true);
             } catch (err) {
             setErrMessage("Deine Nachricht konnte nicht versendet werden")
+            } finally {
+            setIsLoading(false);
             }
         }
         postRequest();
@@ -64,9 +66,10 @@ function ContactForm( { isSmallTablet, adName, adCreatedAt, adId }) {
     return (
         <>
         <Stack style={isSmallTablet ? {} : {flex: "1 1 0", width: "0"}}>
+        {isLoading && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
         {errMessage && !emailWasSent && <ResultAlert title="Etwas ist schief gelaufen" icon="error" message={`Deine Nachricht an ${adName} konnte nicht gesendet werden. Bitte versuche es noch einmal`} wasSuccessful={false}></ResultAlert>}
         {!errMessage && emailWasSent && <ResultAlert title="Versendet" icon="mail" message={`Deine Nachricht wurde an ${adName} gesendet.`} wasSuccessful={true} />}
-        {!errMessage && !emailWasSent &&
+        {!errMessage && !emailWasSent && !isLoading &&
              <form onSubmit={form.onSubmit(
                 (values) => {
                 sendContactEmail(values);

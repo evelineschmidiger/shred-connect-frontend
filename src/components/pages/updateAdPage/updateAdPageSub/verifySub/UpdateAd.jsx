@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Fieldset, Checkbox, Stack, Flex, Group, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Title } from "@mantine/core";
+import { Button, Fieldset, Checkbox, Stack, Flex, Group, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Title, Loader } from "@mantine/core";
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import RadioImages from "../../../../reusable/RadioImages.jsx";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../../data/data.js";
@@ -7,16 +7,11 @@ import ResultAlert from "../../../../reusable/ResultAlert.jsx";
 import socket from "./../../../../../socket.js"
 
 
-
-
-
 function UpdateAd( { id, setIsUpdated, ad, setAd }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [status, setStatus] = useState("pending"); // pending, success, fail
-    
     const [value, setValue] = useState([]);
-    console.log(value);
 
     //const valueCopy = [...value]
     //const initialFormValuesObject = valueCopy.reduce((acc, cur) => ({ ...acc, [cur]: (cur === "instrument") || (cur === "style") ? [] : ""}), {})
@@ -144,94 +139,94 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
 
     return (
       <>
-        {(status === "pending" || status === "fail") && 
-                <Stack>
-                <Checkbox.Group value={value} onChange={setValue}>
-                  <Checkbox value="name" label="Bandname" />
-                  <Checkbox value="message" label="Beschreibung" />
-                  <Checkbox value="instrument" label="Instrument" />
-                  <Checkbox value="canton" label="Kanton" />
-                  <Checkbox value="style" label="Stil" />
-                  <Checkbox value="image" label="Bild" />
-                </Checkbox.Group>
-    
-                <form onSubmit={form.onSubmit(
-                    (values) => {
-                    updateAd(values);
-                    })
-                }>
-                    <Fieldset disabled={isLoading && true} variant="unstyled"> 
-                      <Stack>
-    
-                            {value.includes("name") && <TextInput
-                            label="Bandname"
-                            description="Wie heisst ihr?"
-                            placeholder="Bandname"
-                            key={form.key("name")}
-                            {...form.getInputProps("name")}
-                            />}
-    
-                            {value.includes("message") && <Textarea
-                            label="Inserate-Text"
-                            description="Beschreibe wer ihr seid und was ihr sucht"
-                            placeholder="Dein Text"
-                            autosize
-                            minRows={2}
-                            maxRows={5}
-                            key={form.key("message")}
-                            {...form.getInputProps("message")}
-                            />}
-    
-                            {value.includes("instrument") && <MultiSelect
-                            label="Instrument" 
-                            description="Wähle mindestens 1 und maximal 4 Instrumente"
-                            maxValues={4}
-                            searchable
-                            hidePickedOptions
-                            data={instruments}
-                            key={form.key("instrument")}
-                            {...form.getInputProps("instrument")}
-                            />}
-    
-                            {value.includes("canton") && <NativeSelect
-                            label="Kanton"
-                            description="Wähle einen Kanton"
-                            data={cantons}
-                            key={form.key("canton")}
-                            {...form.getInputProps("canton")}
-                            />}
-    
-                            {value.includes("style") && <MultiSelect
-                            label="Stil"
-                            description="Wähle mindestens 1 und maximal 4 Style-Tags aus"
-                            data={styles}
-                            maxValues={4}
-                            searchable
-                            hidePickedOptions
-                            key={form.key("style")}
-                            {...form.getInputProps("style")}
-                            />}
-    
-                            {value.includes("image") && <Radio.Group
-                            justify="flex-start"
-                            mt="md"
-                            key={form.key("image")}
-                            {...form.getInputProps("image")}
-                            >
-                            <Flex wrap="wrap">
-                                {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
-                            </Flex>
-                            </Radio.Group>}
-                          </Stack>
+        {isLoading && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
+        {!isLoading && (status === "pending") && 
+              <Stack>
+                  <Checkbox.Group value={value} onChange={setValue}>
+                      <Checkbox value="name" label="Bandname" />
+                      <Checkbox value="message" label="Beschreibung" />
+                      <Checkbox value="instrument" label="Instrument" />
+                      <Checkbox value="canton" label="Kanton" />
+                      <Checkbox value="style" label="Stil" />
+                      <Checkbox value="image" label="Bild" />
+                  </Checkbox.Group>
+                  <form onSubmit={form.onSubmit(
+                      (values) => {
+                      updateAd(values);
+                      })
+                  }>
+                      <Fieldset variant="unstyled"> 
+                        <Stack>
+      
+                              {value.includes("name") && <TextInput
+                              label="Bandname"
+                              description="Wie heisst ihr?"
+                              placeholder="Bandname"
+                              key={form.key("name")}
+                              {...form.getInputProps("name")}
+                              />}
+      
+                              {value.includes("message") && <Textarea
+                              label="Inserate-Text"
+                              description="Beschreibe wer ihr seid und was ihr sucht"
+                              placeholder="Dein Text"
+                              autosize
+                              minRows={2}
+                              maxRows={5}
+                              key={form.key("message")}
+                              {...form.getInputProps("message")}
+                              />}
+      
+                              {value.includes("instrument") && <MultiSelect
+                              label="Instrument" 
+                              description="Wähle mindestens 1 und maximal 4 Instrumente"
+                              maxValues={4}
+                              searchable
+                              hidePickedOptions
+                              data={instruments}
+                              key={form.key("instrument")}
+                              {...form.getInputProps("instrument")}
+                              />}
+      
+                              {value.includes("canton") && <NativeSelect
+                              label="Kanton"
+                              description="Wähle einen Kanton"
+                              data={cantons}
+                              key={form.key("canton")}
+                              {...form.getInputProps("canton")}
+                              />}
+      
+                              {value.includes("style") && <MultiSelect
+                              label="Stil"
+                              description="Wähle mindestens 1 und maximal 4 Style-Tags aus"
+                              data={styles}
+                              maxValues={4}
+                              searchable
+                              hidePickedOptions
+                              key={form.key("style")}
+                              {...form.getInputProps("style")}
+                              />}
+      
+                              {value.includes("image") && <Radio.Group
+                              justify="flex-start"
+                              mt="md"
+                              key={form.key("image")}
+                              {...form.getInputProps("image")}
+                              >
+                              <Flex wrap="wrap">
+                                  {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
+                              </Flex>
+                              </Radio.Group>}
+                            </Stack>
                       </Fieldset> 
-                  <Button mt="xl" size="md" type="submit">Inserat ändern</Button>
-  
-                </form>
-            </Stack>
+                      
+                    <Button mt="xl" size="md" type="submit">Inserat ändern</Button>
+    
+                  </form>
+              </Stack>
         }
-        {status === "success" && !isLoading && <ResultAlert icon="check" title="Erledigt" message="Dein Inserat wurde geändert" wasSuccessful={true}></ResultAlert>}
-        {status === "fail" && !isLoading && <ResultAlert icon="error" title="Etwas ist schief gelaufen" message="Das Ändern des Inserates hat nicht funktioniert. Bitte versuche es noch einmal." wasSuccessful={false}></ResultAlert>}
-
+        {!isLoading && (status === "success") && <ResultAlert icon="check" title="Erledigt" message="Dein Inserat wurde geändert" wasSuccessful={true}></ResultAlert>}
+        {!isLoading && (status === "fail") && <ResultAlert icon="error" title="Etwas ist schief gelaufen" message="Das Ändern des Inserates hat nicht funktioniert. Bitte versuche es noch einmal." wasSuccessful={false}></ResultAlert>}
       </>
     )
 }

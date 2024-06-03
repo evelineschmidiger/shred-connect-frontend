@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Center,  Loader, Flex, Container, Title, Space, Grid } from '@mantine/core';
+import { Center,  Loader, Flex, Container, Title, Space, Grid, Skeleton } from '@mantine/core';
 import AdPreview from './AdPreview';
 import AdPagination from './AdPagination';
 
@@ -40,7 +40,7 @@ function AdList( { query, setPaginationQuery, filterQuery, adTotal, setAdTotal }
     return (
       <Container style={{paddingTop: "40px"}} size="lg">
         <Space h="xl"></Space>
-            {isLoading && <Loader />}
+            {isLoading && <Loader color="var(--mantine-color-dark-2)" size="130"/>}
             {errorMessage && <Title order={4}>{errorMessage}</Title>}
             {!isLoading && !errorMessage && 
             <Grid

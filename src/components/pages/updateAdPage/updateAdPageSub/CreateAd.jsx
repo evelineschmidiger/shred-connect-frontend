@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { TextInput, Text, MultiSelect, Loader, Card, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
+import { TextInput, MultiSelect, Loader, Card, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import { cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../data/data.js";
 import RadioImages from "./../../../reusable/RadioImages.jsx";
@@ -9,15 +9,12 @@ import AdDetail from "../../../reusable/AdDetail.jsx";
 import socket from "./../../../../socket.js"
 
 
-
-
 function CreateAd() {
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingEmail, setIsLoadingEmail] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [ad, setAd] = useState("");
     const [emailWasSent, setEmailWasSent] = useState(false);
-
-
 
     const pictureNumbers = Array.from(Array(17), (_, i) => (`0${i+1}`).length === 2 ? `0${i+1}` : `${i+1}`);
     
@@ -41,7 +38,6 @@ function CreateAd() {
       },
     });
 
-  
     function createAd(values) {
       const { email, bandname, beschreibung, style, instrument, canton, image } = values;
       const bodyObject = {
@@ -66,17 +62,12 @@ function CreateAd() {
             })
             const body = await response.json();
             
-          
           if (!response.ok) {
-            
             throw new Error("Etwas ist schief gelaufen beim Erstellen des Inserates")
           }
           sendCodeEmail(body.data.ad.code, body.data.ad.email)
           setAd(body.data.ad)
-          socket.emit("created", body.data.ad)
-          
-          //socket.emit("created", `Ein neues Inserat für die Band ${body.data.ad.name} wurde soeben erstellt. Sie suchen unter anderem folgende Instrumente: ${body.data.ad.instrument[0]}`)
-          
+          socket.emit("created", body.data.ad)          
         } catch (err) {
           console.log(err.message);
           setErrorMessage("Etwas ist schief gelaufen beim Erstellen des Inserates");
@@ -91,6 +82,7 @@ function CreateAd() {
 
       async function postRequest() {
         try {
+          setIsLoadingEmail(true);
           const response = await fetch("http://localhost:7777/api/adverts/sendCode", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -99,16 +91,15 @@ function CreateAd() {
               code
             })
           })
-          
-          const body = await response.json();
+          //const body = await response.json();
           if (!response.ok) {
-            console.log(response);
-          //throw new Error("Die Email mit dem Inserate-Code konnte nicht versandt werden")
+            throw new Error("Etwas ist schief gelaufen beim Versenden des Code-Emails")
           }
-
         setEmailWasSent(true);
         } catch (err) {
-          //console.log(err);
+          console.log(err);
+        } finally {
+          setIsLoadingEmail(false);
         }
       }
       postRequest();
@@ -116,11 +107,15 @@ function CreateAd() {
 
     return (
       <>
-      {isLoading && <Loader></Loader>}
+      {isLoading && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
       {!isLoading && errorMessage && <ResultAlert icon="error" message={errorMessage} wasSuccessful={false} />}
       {!isLoading && ad && <ResultAlert title={`Dein Inserate-Code: ${ad.code}`} icon="notification" message={`Dein Inserat wurde erstellt. Benutze diesen Inserate-Code zum Ändern oder Löschen des Inserats.`} wasSuccessful={true} />}
-      {!isLoading && ad && emailWasSent && <ResultAlert title="Email versendet" icon="mail" message="Eine Email mit deinem Inserate-Code wurde soeben an deine Email-Adresse gesendet" wasSuccessful={true}></ResultAlert>}
+      
+      {isLoadingEmail && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
+      {!isLoadingEmail && ad && emailWasSent && <ResultAlert title="Email versendet" icon="mail" message="Eine Email mit deinem Inserate-Code wurde soeben an deine Email-Adresse gesendet" wasSuccessful={true}></ResultAlert>}
+
       {!isLoading && ad && <Card><AdDetail ad={ad}/></Card>}
+
 
       {!ad && !isLoading && 
         <form onSubmit={form.onSubmit(
@@ -133,7 +128,7 @@ function CreateAd() {
                   withAsterisk
                   label="E-Mail"
                   description="Deine E-Mail-Adresse"
-                  placeholder="musterperson@muster.com"
+                  placeholder="master-of-noise@gmail.com"
                   error="Ungültige E-Mail-Adresse"
                   key={form.key("email")}
                   {...form.getInputProps("email")}
@@ -143,7 +138,7 @@ function CreateAd() {
                   withAsterisk
                   label="Bandname"
                   description="Wie heisst ihr?"
-                  placeholder="Bandname"
+                  placeholder="The evil brothers"
                   key={form.key("bandname")}
                   {...form.getInputProps("bandname")}
               />
@@ -151,7 +146,7 @@ function CreateAd() {
               <Textarea
                   label="Inserate-Text"
                   description="Beschreibe wer ihr seid und was ihr sucht"
-                  placeholder="Dein Text"
+                  placeholder="Wir sind böse, komm zu uns!"
                   autosize
                   minRows={3}
                   maxRows={8}

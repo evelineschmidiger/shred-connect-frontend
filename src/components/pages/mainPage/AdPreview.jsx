@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Image, Stack, Badge, Card, Grid, Flex, Text, Divider } from '@mantine/core';
+import { Image, Stack, Badge, Card, Grid, Flex, Text, Divider, Skeleton } from '@mantine/core';
 
 import BadgeGroup from '../../reusable/BadgeGroup';
 //style={{width: "230px", height: "460px"}}
@@ -7,7 +7,8 @@ import BadgeGroup from '../../reusable/BadgeGroup';
 function AdPreview({ ad }) {
     return (
         <Grid.Col span={{ base: 12, xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <Card  padding="xs" radius="sm" withBorder>
+            
+            <Card padding="xs" radius="sm" withBorder>
 
                 <Flex h="46" mb="6"align="center" justify="center">
                     <Text ta="center" fz="1rem" fw="600"order={5} >{ad.name}</Text>
@@ -19,6 +20,7 @@ function AdPreview({ ad }) {
                             src={`/${ad.image}.jpg` || "/choice_14.jpg"}
                             height={140}
                             alt="Live Musician"
+                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Link>
                 </Card.Section>
@@ -42,6 +44,7 @@ function AdPreview({ ad }) {
 
                 </Stack>
             </Card>
+      
         </Grid.Col>
     )
  }

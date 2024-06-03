@@ -84,9 +84,8 @@ export default function App() {
        <Routes>
             <Route index path="/" element={<MainPage />} />
             <Route index path="/ads" element={<MainPage />} />
-            <Route path="ads/:id" element={<AdDetailPage />}></Route>
+            <Route path="ads/:id" element={<AdDetailPage />}/>
             <Route path="update" element={<UpdateAdPage />}>
-              <Route index element={<Navigate replace to="create"/>} />
               <Route path="create" element={<CreateAd />} />
               <Route path="verify" element={<Verify/>} />
             </Route>

@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Image, Stack, Badge, Card, Grid, Flex, Text, Divider, Skeleton } from '@mantine/core';
+import { Image, Stack, Badge, Card, Grid, Flex, Text, Divider } from '@mantine/core';
 
 import BadgeGroup from '../../reusable/BadgeGroup';
 //style={{width: "230px", height: "460px"}}
 
 function AdPreview({ ad }) {
     return (
-        <Grid.Col span={{ base: 12, xs: 12, sm: 6, md: 4, lg: 3 }}>
+        <Grid.Col span={{ base: 12, xs: 6, sm: 6, md: 4, lg: 3 }}>
             
             <Card padding="xs" radius="sm" withBorder>
 

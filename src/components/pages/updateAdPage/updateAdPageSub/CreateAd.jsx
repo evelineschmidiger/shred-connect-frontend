@@ -125,76 +125,79 @@ function CreateAd() {
            }>
             <Fieldset disabled={isLoading && true} >  
               <TextInput
-                  withAsterisk
-                  label="E-Mail"
-                  description="Deine E-Mail-Adresse"
-                  placeholder="master-of-noise@gmail.com"
-                  error="Ungültige E-Mail-Adresse"
-                  key={form.key("email")}
-                  {...form.getInputProps("email")}
+                withAsterisk
+                label="E-Mail"
+                description="Deine E-Mail-Adresse"
+                placeholder="master-of-noise@gmail.com"
+                error="Ungültige E-Mail-Adresse"
+                key={form.key("email")}
+                {...form.getInputProps("email")}
               />
 
               <TextInput
-                  withAsterisk
-                  label="Bandname"
-                  description="Wie heisst ihr?"
-                  placeholder="The evil brothers"
-                  key={form.key("bandname")}
-                  {...form.getInputProps("bandname")}
+                withAsterisk
+                label="Bandname"
+                description="Wie heisst ihr?"
+                placeholder="The evil brothers"
+                key={form.key("bandname")}
+                {...form.getInputProps("bandname")}
               />
 
               <Textarea
-                  label="Inserate-Text"
-                  description="Beschreibe wer ihr seid und was ihr sucht"
-                  placeholder="Wir sind böse, komm zu uns!"
-                  autosize
-                  minRows={3}
-                  maxRows={8}
-                  withAsterisk
-                  key={form.key("beschreibung")}
-                  {...form.getInputProps("beschreibung")}
+                label="Inserate-Text"
+                description="Beschreibe wer ihr seid und was ihr sucht"
+                placeholder="Wir sind böse, komm zu uns!"
+                autosize
+                minRows={3}
+                maxRows={8}
+                withAsterisk
+                key={form.key("beschreibung")}
+                {...form.getInputProps("beschreibung")}
               />
               
               <MultiSelect 
-              label="Instrument" 
-              description="Wähle mindestens 1 und maximal 4 Instrumente"
-              maxValues={4}
-              withAsterisk
-              searchable
-              hidePickedOptions
-              data={instruments}
-              key={form.key("instrument")}
-              {...form.getInputProps("instrument")}
+                label="Instrument" 
+                description="Wähle mindestens 1 und maximal 4 Instrumente"
+                maxValues={4}
+                withAsterisk
+                searchable
+                hidePickedOptions
+                data={instruments}
+                key={form.key("instrument")}
+                {...form.getInputProps("instrument")}
               ></MultiSelect>
 
               <NativeSelect
-              label="Kanton"
-              description="Wähle einen Kanton"
-              data={cantons}
-              withAsterisk
-              key={form.key("canton")}
-              {...form.getInputProps("canton")}
+                label="Kanton"
+                description="Wähle einen Kanton"
+                data={cantons}
+                withAsterisk
+                key={form.key("canton")}
+                {...form.getInputProps("canton")}
               />
 
               <MultiSelect
-              label="Stil"
-              description="Wähle mindestens 1 und maximal 4 Style-Tags aus"
-              data={styles}
-              maxValues={4}
-              searchable
-              withAsterisk
-              hidePickedOptions
-              key={form.key("style")}
-              {...form.getInputProps("style")}
+                label="Stil"
+                description="Wähle mindestens 1 und maximal 4 Style-Tags aus"
+                data={styles}
+                maxValues={4}
+                searchable
+                withAsterisk
+                hidePickedOptions
+                key={form.key("style")}
+                {...form.getInputProps("style")}
               />
 
               <Radio.Group
+                label="Bild"
+                mt="0px"
+                withAsterisk
+                description="Wähle ein Bild für dein Inserat"
                 justify="flex-start"
-                mt="md"
                 key={form.key("image")}
                 {...form.getInputProps("image")}
               >
-                  <Flex wrap="wrap">
+                  <Flex mt="0px" wrap="wrap" >
                     {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
                   </Flex>
               </Radio.Group> 

@@ -5,6 +5,7 @@ import RadioImages from "../../../../reusable/RadioImages.jsx";
 import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../../data/data.js";
 import ResultAlert from "../../../../reusable/ResultAlert.jsx";
 import socket from "./../../../../../socket.js"
+import { useMediaQuery } from "@mantine/hooks";
 
 
 function UpdateAd( { id, setIsUpdated, ad, setAd }) {
@@ -12,6 +13,7 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
     const [errorMessage, setErrorMessage] = useState("");
     const [status, setStatus] = useState("pending"); // pending, success, fail
     const [value, setValue] = useState([]);
+    const isSmall = useMediaQuery(`(max-width: 600px)`);
 
     //const valueCopy = [...value]
     //const initialFormValuesObject = valueCopy.reduce((acc, cur) => ({ ...acc, [cur]: (cur === "instrument") || (cur === "style") ? [] : ""}), {})
@@ -141,7 +143,7 @@ function UpdateAd( { id, setIsUpdated, ad, setAd }) {
       <>
         {isLoading && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
         {!isLoading && (status === "pending") && 
-              <Stack>
+              <Stack >
                   <Checkbox.Group value={value} onChange={setValue}>
                       <Checkbox value="name" label="Bandname" />
                       <Checkbox value="message" label="Beschreibung" />

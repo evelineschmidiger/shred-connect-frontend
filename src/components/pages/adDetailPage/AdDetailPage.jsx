@@ -13,7 +13,7 @@ export default function AdDetailPage() {
   const isSmallTablet = useMediaQuery(`(max-width: 780px)`);
 
     return (
-        <Container size="xl">
+        <Container size="lg">
           <Flex direction={isSmallTablet ? "column" : "row"} justify="center" align="start" gap="lg">
               <Card style={isSmallTablet ? {} : {flex: "1 1 0", width: "0"}}>
                 {isLoading && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Flex, Image, Title, Group, Text, ActionIcon, HoverCard } from '@mantine/core';
 import { IconEdit } from "@tabler/icons-react";
 
@@ -19,7 +19,10 @@ function Navigation() {
                 <HoverCard width={280}>
                     <HoverCard.Target>
                         <Link style={{textDecoration: "none", boxShadow: "none"}} to="/update">
-                            <ActionIcon size="2.3rem" variant="filled" style={{color: "var(--mantine-color-blue-1)", backgroundColor: "var(--mantine-color-blue-8)"}}><IconEdit stroke={1.5} style={{ width: "1.7rem", height: "1.7rem" }}></IconEdit></ActionIcon>
+                            <ActionIcon size="2.3rem" variant="filled" style={{color: "var(--mantine-color-blue-1)", backgroundColor: "var(--mantine-color-blue-8)"}}>
+                                <IconEdit stroke={1.5} style={{ width: "1.7rem", height: "1.7rem" }}>
+                                </IconEdit>
+                            </ActionIcon>
                         </Link>
                     </HoverCard.Target>
                     <HoverCard.Dropdown>

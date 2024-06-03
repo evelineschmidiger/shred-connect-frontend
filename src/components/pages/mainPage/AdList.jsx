@@ -38,13 +38,12 @@ function AdList( { query, setPaginationQuery, filterQuery, adTotal, setAdTotal }
 
 
     return (
-      <Container style={{paddingTop: "40px"}} size="lg">
+      <Container mt="40px" size="lg">
         <Space h="xl"></Space>
             {isLoading && <Loader color="var(--mantine-color-dark-2)" size="130"/>}
             {errorMessage && <Title order={4}>{errorMessage}</Title>}
             {!isLoading && !errorMessage && 
             <Grid
-            //justify="center"
             gutter={{ base: 5, xs: 'sm', sm: 'sm', md: "md", xl: "md" }}
             >
             {ads.map(ad => <AdPreview ad={ad} key={ad._id} />)}

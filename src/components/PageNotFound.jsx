@@ -1,8 +1,19 @@
+import { Stack, Title } from "@mantine/core"
+
 function PageNotFound() {
     return (
-        <div>
-            PAGE NOT FOUND
-        </div>
+        <>
+        <Stack align="center">
+            <Title fz="150">
+                🤷🏻
+            </Title>
+            <Title fz="34">
+                    PAGE NOT FOUND
+            </Title>
+        </Stack>
+
+        </>
+
     )
 }
 

@@ -1,28 +1,38 @@
-import { ActionIcon, Group, HoverCard, Paper, Stack, Text } from "@mantine/core"
+import { ActionIcon, Flex, Group, HoverCard, Text } from "@mantine/core"
 import { IconBrandGithubFilled } from "@tabler/icons-react";
 
 function Footer() {
     return (
-        <>
-        <Group pt="xl" pb="xl" justify="space-around">
+        <Flex
+            p={{base: "md", sm: "xl"}}
+            direction={{ base: "column", sm: "row" }}
+            gap={{ base: "sm", md: 'md' }}
+            justify={{ base: "center", sm: "space-around" }}
+            align={{ base: "flex-start", sm: "center"}}
+        >
+            <address style={{fontSize: "0.76rem", color: "#828282", fontStyle: "normal"}}>
+                Shred-Connect<br />
+                Elsässerstrasse 38<br />
+                4056 Basel
+            </address>
 
-
-                <address style={{fontSize: "0.8rem", color: "#828282", fontStyle: "normal"}}>
-                    Shred-Connect<br />
-                    Elsässerstrasse 38<br />
-                    4056 Basel
-                </address>
-
-
-
-
-            <p style={{fontSize: "0.96rem", fontStyle: "normal"}}>
-                Hast du deinen Inserate-Code vergessen, ein Problem oder eine Frage?
-                Wende dich an <a className="emailLink" href= "mailto: info@shred-connect.ch">info@shred-connect.ch</a>
-            </p>
-
+            <Flex
+                direction={{ base: "column", lg: "row" }}
+                gap={{ base: "0", sm: "4" }}
+                justify={{ base: "center" }}
+                align={{ base: "flex-start", lg: "center"}}
+            >
+                <Text fz={{ base: "0.76rem", sm: "0.82rem", md: "0.92rem" }}>
+                    Hast du deinen Inserate-Code vergessen, ein Problem oder eine Frage?
+                </Text>
+                <Text fz={{ base: "0.76rem", sm: "0.82rem", md: "0.92rem" }}>
+                    Wende dich an <a className="emailLink" href= "mailto: info@shred-connect.ch">info@shred-connect.ch</a>
+                </Text>
+            </Flex>
+            
 
             <Group gap="xs">
+
                 <HoverCard width={190}>
                     <HoverCard.Target>
                             <ActionIcon 
@@ -60,12 +70,10 @@ function Footer() {
                         <Text size="xs">Shred-Connect Frontend</Text>
                     </HoverCard.Dropdown>
                 </HoverCard>
+
             </Group>
 
-        </Group>
-
-        </>
-
+        </Flex>
     )
 }
 

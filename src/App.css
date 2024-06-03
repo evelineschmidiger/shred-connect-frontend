@@ -19,11 +19,25 @@ Highlight: Orange 7
   box-shadow: "none"
 } */
 
-.m_9e117634 {
-  fill: rgb(208, 236, 29);
+
+/* mantine dark 1 b8b8b8 */
+.emailLink:link {
+  color: #b8b8b8;
 }
 
+.emailLink:visited {
+ color: #b8b8b8;
+}
 
+/* mantine blue 5 339af0 */
+.emailLink:hover {
+  color: #339af0;
+}
+
+/* mantine blue 9 1864ab */
+.emailLink:active {
+  color: #1864ab
+}
 
 
 

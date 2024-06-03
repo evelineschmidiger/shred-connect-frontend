@@ -15,11 +15,11 @@ import Verify from "./components/pages/updateAdPage/updateAdPageSub/Verify.jsx";
 import PageNotFound from "./components/PageNotFound.jsx";
 import './App.css'
 import NotificationLinks from './components/NotificationLinks.jsx';
+import Footer from './components/Footer.jsx';
 
 
 
 export default function App() {
-
   const [navigateId, setNavigateId] = useState("");
 
 
@@ -65,6 +65,7 @@ export default function App() {
   return (
     <BrowserRouter>
     {navigateId && <NotificationLinks navigateId={navigateId} setNavigateId={setNavigateId}/>}
+    
       <AppShell 
         header={{ height: 68 }}
         padding="xl"
@@ -72,14 +73,13 @@ export default function App() {
 
         <AppShell.Header style={{background: "radial-gradient(circle, var(--mantine-color-cyan-9) 4%, var(--mantine-color-blue-9) 100%)"}}>
           <Navigation />
-          
         </AppShell.Header>
 
         <Space h="xl"></Space>
         <Space h="xl"></Space>
         <Space h="xl"></Space>
 
-        <AppShell.Main>
+        <AppShell.Main pb="180">
        {/* <Notification></Notification> */}
        <Routes>
             <Route index path="/" element={<MainPage />} />
@@ -94,9 +94,11 @@ export default function App() {
              <Route path="/redirect" element={<Navigate to="/"/>} />
              <Route path="*" element={<PageNotFound/>}/>
           </Routes>
-        </AppShell.Main>
+        </AppShell.Main >
+        <AppShell.Footer bg="var(--mantine-color-dark-8)" style={{position: "static"}}withBorder={true}><Footer></Footer></AppShell.Footer>
       </AppShell>
     </BrowserRouter>
+    
   )
 }
 

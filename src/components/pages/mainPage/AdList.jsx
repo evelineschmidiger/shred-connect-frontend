@@ -15,7 +15,7 @@ function AdList( { query, setPaginationQuery, filterQuery, adTotal, setAdTotal }
             try {
                 setIsLoading(true);
                 setErrorMessage("");
-                const res = await fetch(`http://localhost:7777/api/adverts?${query}`, {signal: controller.signal});
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/adverts?${query}`, {signal: controller.signal});
                 if(!res.ok) throw new Error("Etwas ist schiefgelaufen beim Laden des Inserates");
                 const data = await res.json();
                 if(!data.data.ads) throw new Error("Keine Inserate gefunden")

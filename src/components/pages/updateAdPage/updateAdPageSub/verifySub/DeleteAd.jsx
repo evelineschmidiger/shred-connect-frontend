@@ -1,20 +1,18 @@
 import { useState } from "react";
 import { Button, Stack, Loader, Dialog, Text } from '@mantine/core';
 import { useDisclosure} from '@mantine/hooks';
-import ResultAlert from "../../../../reusable/ResultAlert";
+
 
 
 function DeleteAd( { id, setIsDeleted}) {
     const [status, setStatus] = useState("pending");
     const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
     const [opened, { open, close }] = useDisclosure(false);
 
     function deleteRequest(id) {
       async function deleteAdByID() {
         try {
           setIsLoading(true);
-          setErrorMessage("");
           const res = await fetch(`http://localhost:7777/api/adverts/${id}`, {
             method: "DELETE",
             headers: {"Content-Type": "application/json"}
@@ -24,7 +22,8 @@ function DeleteAd( { id, setIsDeleted}) {
           setIsDeleted(true);
         } catch (err) {
           setStatus("fail");
-          setErrorMessage(err.message);
+          setIsDeleted(false);
+          console.log(err.message)
         } finally {
           setIsLoading(false);
         }
@@ -33,8 +32,10 @@ function DeleteAd( { id, setIsDeleted}) {
     }
 
     return (
+
+
+      
       <Stack align="flex-start">
-          {status !== "pending" && !isLoading && <ResultAlert icon={errorMessage ? "error" : "check"} title={errorMessage ? "Etwas ist schief gelaufen" : "Erledigt"} message={(errorMessage) ? errorMessage : "Dein Inserat wurde gelöscht"} wasSuccessful={status === "success"}/>}
           {(status === "pending" || status === "fail") && !isLoading && <Button mt="xl" size="md" onClick={open}>Jetzt löschen</Button>}
           <Dialog bg="var(--mantine-color-dark-6)" size="md" withBorder opened={opened} position={{ bottom: 30, right: 30 }} withCloseButton onClose={close} radius="md">
             <Stack>
@@ -44,6 +45,7 @@ function DeleteAd( { id, setIsDeleted}) {
           </Dialog>
           {isLoading && <Loader/>}
       </Stack>
+
   )
 }
 

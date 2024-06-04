@@ -48,7 +48,7 @@ function CodeVerification( { setAd, setAdId }) {
     <>
     {!isLoading && errorMessage && <ResultAlert icon="error" title="Etwas ist schief gelaufen" message={errorMessage} wasSuccessful={false} />}
 
-    <Card style={{backgroundColor: "transparent"}} withBorder>
+    <Card mt="xl" style={{backgroundColor: "transparent"}} withBorder>
         <form onSubmit={form.onSubmit(
             (code) => {
             getAd(code.code);

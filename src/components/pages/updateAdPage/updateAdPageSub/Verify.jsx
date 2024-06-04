@@ -5,6 +5,7 @@ import AdDetail from "../../../reusable/AdDetail";
 import DeleteAd from "./verifySub/DeleteAd";
 import UpdateAd from "./verifySub/UpdateAd";
 import CodeVerification from "./CodeVerification";
+import ResultAlert from "../../../reusable/ResultAlert";
 
 
 
@@ -12,7 +13,7 @@ function Verify() {
   const [adId, setAdId] = useState("");
   const [ad, setAd] = useState("");
   const [value, setValue] = useState(""); // pending / delete / update - choose activity
-  const [isDeleted, setIsDeleted ] = useState(false)
+  const [isDeleted, setIsDeleted ] = useState("")
   const [isUpdated, setIsUpdated ] = useState(false);
   const isSmall = useMediaQuery(`(max-width: 600px)`);
 
@@ -45,6 +46,10 @@ function Verify() {
                   <Stack>
                   {value === "delete" && <DeleteAd id={adId} setIsDeleted={setIsDeleted} />}
                   {value === "update" && <UpdateAd id={adId} ad={ad} setAd={setAd} setIsUpdated={setIsUpdated}/>}
+
+                  {isDeleted && <ResultAlert icon={"check"} title={"Erledigt"} message={"Dein Inserat wurde gelöscht"} wasSuccessful={true}/>}
+                  {(isDeleted === false) && <ResultAlert icon={"error"} title={"Etwas ist schief gelaufen"} message={"Dein Inserat konnte nicht gelöscht werden"} wasSuccessful={false}/>}
+                  
                   </Stack>
               </Card>
           </Flex>}

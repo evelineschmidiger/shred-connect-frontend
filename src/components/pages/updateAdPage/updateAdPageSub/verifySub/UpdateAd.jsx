@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Button, Fieldset, Checkbox, Stack, Flex, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Title, Loader } from "@mantine/core";
+import { Button, Fieldset, Checkbox, Stack, Flex, MultiSelect, NativeSelect, Radio, TextInput, Textarea, Loader } from "@mantine/core";
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import RadioImages from "../../../../reusable/RadioImages.jsx";
-import {cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../../data/data.js";
+import {cantons, instrumentsAdCreation as instruments, styles} from "../../../../../data/data.js";
 import ResultAlert from "../../../../reusable/ResultAlert.jsx";
 import socket from "./../../../../../socket.js"
 

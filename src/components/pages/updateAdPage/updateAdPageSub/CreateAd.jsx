@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { TextInput, MultiSelect, Loader, Card, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
-import { cantons, instrumentsAdCreation as instruments, stylesAdCreation as styles} from "../../../../data/data.js";
+import { cantons, instrumentsAdCreation as instruments, styles} from "../../../../data/data.js";
 import RadioImages from "./../../../reusable/RadioImages.jsx";
 import ResultAlert from "../../../reusable/ResultAlert.jsx";
 import AdDetail from "../../../reusable/AdDetail.jsx";

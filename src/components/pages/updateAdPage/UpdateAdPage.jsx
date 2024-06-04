@@ -21,11 +21,10 @@ export default function UpdateAdPage() {
                 <Tabs
                 orientation={isSmall ? "vertical" : "horizontal"}
                 variant="default"
-                mb="xl"
                 value={task}
                 onChange={(value) => {navigate(`/update/${value}`)}}
                 >
-                    <Tabs.List>
+                    <Tabs.List mb="xl">
                         <Tabs.Tab value="create" fz={{ base: "0.8rem", xs: "1rem"}} leftSection={<IconFilePlus stroke={1} style={{ width: "1.7rem", height: "1.7rem" }} />}>Inserat erstellen</Tabs.Tab>
                         <Tabs.Tab value="verify" fz={{ base: "0.8rem", xs: "1rem"}} leftSection={<IconEdit stroke={1} style={{ width: "1.7rem", height: "1.7rem" }} />}>Inserat ändern oder löschen</Tabs.Tab>
                     </Tabs.List>

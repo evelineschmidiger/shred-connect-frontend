@@ -22,7 +22,7 @@ import Footer from './components/Footer.jsx';
 export default function App() {
   const [navigateId, setNavigateId] = useState("");
 
-
+  // Socket Notifications
   useEffect(() => {
     // gets text from backend - here we have access to display it
     function onUpdated(ad) {
@@ -42,7 +42,7 @@ export default function App() {
       notifications.show({
         title: `${ad.name} hat soeben ein Inserat erstellt.`,
         message: <><Text pb="20">Hier kannst du es dir anschauen:</Text><Button size="xs" variant="filled" onClick={() => {setNavigateId(ad._id), notifications.hide(`${ad._id}`)}}>Inserat Anschauen</Button></>,
-        autoClose: 7000,
+        autoClose: 8000,
         withCloseButton: true,
         id:`${ad._Id}`,
         color: "var(--mantine-color-blue-6	)",
@@ -85,10 +85,10 @@ export default function App() {
             <Route index path="/" element={<MainPage />} />
             <Route index path="/ads" element={<MainPage />} />
             <Route path="ads/:id" element={<AdDetailPage />}/>
-            <Route path="update" element={<UpdateAdPage />}>
-                <Route index element={<Navigate replace to="create"/>} />
-                <Route path="create" element={<CreateAd />} />
-                <Route path="verify" element={<Verify/>} />
+            <Route path="update/:task" element={<UpdateAdPage />}>
+{/*                <Route index element={<Navigate replace to=":create"/>} />
+                <Route path=":create" element={<CreateAd />} />
+                <Route path=":verify" element={<Verify/>} />  */}
             </Route>
             
              <Route path="/redirect" element={<Navigate to="/"/>} />

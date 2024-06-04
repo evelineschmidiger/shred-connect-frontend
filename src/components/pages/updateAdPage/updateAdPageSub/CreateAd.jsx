@@ -63,6 +63,7 @@ function CreateAd() {
             const body = await response.json();
             
           if (!response.ok) {
+            console.log(body);
             throw new Error("Etwas ist schief gelaufen beim Erstellen des Inserates")
           }
           sendCodeEmail(body.data.ad.code, body.data.ad.email)
@@ -124,7 +125,7 @@ function CreateAd() {
             })
            }>
             <Fieldset disabled={isLoading && true} >  
-              <TextInput
+              <TextInput mb="xs"
                 withAsterisk
                 label="E-Mail"
                 description="Deine E-Mail-Adresse"
@@ -134,7 +135,7 @@ function CreateAd() {
                 {...form.getInputProps("email")}
               />
 
-              <TextInput
+              <TextInput mb="xs"
                 withAsterisk
                 label="Bandname"
                 description="Wie heisst ihr?"
@@ -143,7 +144,7 @@ function CreateAd() {
                 {...form.getInputProps("bandname")}
               />
 
-              <Textarea
+              <Textarea mb="xs"
                 label="Inserate-Text"
                 description="Beschreibe wer ihr seid und was ihr sucht"
                 placeholder="Wir sind böse, komm zu uns!"
@@ -155,7 +156,7 @@ function CreateAd() {
                 {...form.getInputProps("beschreibung")}
               />
               
-              <MultiSelect 
+              <MultiSelect mb="xs"
                 label="Instrument" 
                 description="Wähle mindestens 1 und maximal 4 Instrumente"
                 maxValues={4}
@@ -167,7 +168,7 @@ function CreateAd() {
                 {...form.getInputProps("instrument")}
               ></MultiSelect>
 
-              <NativeSelect
+              <NativeSelect mb="xs"
                 label="Kanton"
                 description="Wähle einen Kanton"
                 data={cantons}
@@ -176,7 +177,7 @@ function CreateAd() {
                 {...form.getInputProps("canton")}
               />
 
-              <MultiSelect
+              <MultiSelect mb="xs"
                 label="Stil"
                 description="Wähle mindestens 1 und maximal 4 Style-Tags aus"
                 data={styles}
@@ -188,7 +189,7 @@ function CreateAd() {
                 {...form.getInputProps("style")}
               />
 
-              <Radio.Group
+              <Radio.Group mb="xs"
                 label="Bild"
                 mt="0px"
                 withAsterisk

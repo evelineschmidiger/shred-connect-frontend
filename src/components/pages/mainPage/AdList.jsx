@@ -23,8 +23,7 @@ function AdList( { query, setPaginationQuery, filterQuery, adTotal, setAdTotal }
                 setAdTotal(data.data.lengthWithoutPaginate);
             } catch (err) {
                 if(err.name !== "AbortError") {
-                    console.log(err.message);
-                    setErrorMessage(err.message);
+                    setErrorMessage("Die Inserate konnten nicht geladen werden");
                 }
             } finally {
                 setIsLoading(false);

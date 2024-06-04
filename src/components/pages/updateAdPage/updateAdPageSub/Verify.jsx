@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SegmentedControl, Group, Title, Stack, Container, Card, Radio, Flex } from '@mantine/core';
+import { Group, Stack, Container, Card, Radio, Flex } from '@mantine/core';
 import AdDetail from "../../../reusable/AdDetail";
 import DeleteAd from "./verifySub/DeleteAd";
 import UpdateAd from "./verifySub/UpdateAd";

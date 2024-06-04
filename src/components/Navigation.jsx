@@ -18,7 +18,7 @@ function Navigation() {
             <Group justify="center">
                 <HoverCard width={280}>
                     <HoverCard.Target>
-                        <Link style={{textDecoration: "none", boxShadow: "none"}} to="/update">
+                        <Link style={{textDecoration: "none", boxShadow: "none"}} to="/update/create">
                             <ActionIcon size="2.3rem" variant="filled" style={{color: "var(--mantine-color-blue-1)", backgroundColor: "var(--mantine-color-blue-8)"}}>
                                 <IconEdit stroke={1.5} style={{ width: "1.7rem", height: "1.7rem" }}>
                                 </IconEdit>

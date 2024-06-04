@@ -8,7 +8,6 @@ function AdDetail({ ad }) {
   const created = ad.createdAt && formatDate(ad.createdAt);
   const updated = ad.lastUpdatedAt && formatDate(ad.lastUpdatedAt);
 
-
   function formatDate(date) {
     return new Date(date).toLocaleDateString("ch-DE", {day: "numeric", month: "long", year: "numeric"})
   }

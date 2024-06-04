@@ -1,5 +1,4 @@
-import { TextInput, MultiSelect, Flex, Image, Radio } from '@mantine/core';
-
+import { Flex, Image, Radio } from '@mantine/core';
 
 
 function RadioElement( {number}) {

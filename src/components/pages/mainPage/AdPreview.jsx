@@ -1,19 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Image, Stack, Badge, Card, Grid, Flex, Text, Divider } from '@mantine/core';
-
 import BadgeGroup from '../../reusable/BadgeGroup';
-//style={{width: "230px", height: "460px"}}
 
 function AdPreview({ ad }) {
     return (
         <Grid.Col span={{ base: 12, xs: 6, sm: 6, md: 4, lg: 3 }}>
-            
             <Card padding="xs" radius="sm" withBorder>
-
                 <Flex h="46" mb="6"align="center" justify="center">
                     <Text ta="center" fz="1rem" fw="600"order={5} >{ad.name}</Text>
-                </Flex>
-                
+                </Flex>  
                 <Card.Section pb="md">
                         <Link to={`ads/${ad._id}`}>   
                             <Image
@@ -24,7 +19,6 @@ function AdPreview({ ad }) {
                             />
                         </Link>
                 </Card.Section>
-
                 <Stack gap="xs" mb="0">
 
                     <Stack h="70" gap="xs" mt="1">
@@ -43,8 +37,7 @@ function AdPreview({ ad }) {
                     </Stack>
 
                 </Stack>
-            </Card>
-      
+            </Card>      
         </Grid.Col>
     )
  }

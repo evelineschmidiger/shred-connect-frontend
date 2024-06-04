@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Group, Stack, Container, Card, Radio, Flex } from '@mantine/core';
+import { useMediaQuery } from "@mantine/hooks";
 import AdDetail from "../../../reusable/AdDetail";
 import DeleteAd from "./verifySub/DeleteAd";
 import UpdateAd from "./verifySub/UpdateAd";
 import CodeVerification from "./CodeVerification";
-import { useMediaQuery } from "@mantine/hooks";
+
 
 
 function Verify() {
@@ -50,6 +51,5 @@ function Verify() {
     </>
     )
 }
-
 
 export default Verify

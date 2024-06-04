@@ -1,19 +1,15 @@
-import { useState, useEffect } from 'react';
-import { Outlet, useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container, Stack, Tabs } from '@mantine/core';
-import { IconEdit, IconFilePlus } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
+import { IconEdit, IconFilePlus } from '@tabler/icons-react';
 import Verify from './updateAdPageSub/Verify';
 import CreateAd from './updateAdPageSub/CreateAd';
 
 
 export default function UpdateAdPage() {
     const navigate = useNavigate();
-    //const [value, setValue] = useState("")
     const isSmall = useMediaQuery(`(max-width: 600px)`);
     const { task } = useParams();
-    console.log(task);
-
 
     return (
         <Container size="lg">
@@ -38,10 +34,6 @@ export default function UpdateAdPage() {
                     </Tabs.Panel>
 
                 </Tabs>
-
-
-
-
             </Stack>
         
         </Container>

@@ -32,7 +32,6 @@ function Footer() {
             
 
             <Group gap="xs">
-
                 <HoverCard width={190}>
                     <HoverCard.Target>
                             <ActionIcon 
@@ -51,7 +50,6 @@ function Footer() {
                         <Text size="xs">Shred-Connect Backend</Text>
                     </HoverCard.Dropdown>
                 </HoverCard>
-
                 <HoverCard width={190}>
                     <HoverCard.Target>
                         <ActionIcon 
@@ -70,7 +68,6 @@ function Footer() {
                         <Text size="xs">Shred-Connect Frontend</Text>
                     </HoverCard.Dropdown>
                 </HoverCard>
-
             </Group>
 
         </Flex>

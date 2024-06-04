@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Container } from '@mantine/core';
-
 import FilterForm from './FilterForm.jsx';
 import AdList from './AdList.jsx';
 
@@ -15,10 +14,9 @@ export default function MainPage() {
     // Chain querys, ad "&" if necessary
     const query = `${paginationQuery}${filterQuery && "&"}${filterQuery}`
 
-    
     return (
         <Container size="lg">
-            <FilterForm filterQuery={filterQuery} setFilterQuery={setFilterQuery} adTotal={adTotal} setAdTotal={setAdTotal}/>
+            <FilterForm filterQuery={filterQuery} setFilterQuery={setFilterQuery} adTotal={adTotal}/>
             <AdList query={query} filterQuery={filterQuery} setPaginationQuery={setPaginationQuery} adTotal={adTotal} setAdTotal={setAdTotal}/>
         </Container>
     )

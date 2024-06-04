@@ -1,13 +1,12 @@
-
 import { useParams } from "react-router";
 import { Container, Card, Title, Loader, Flex } from '@mantine/core';
+import { useMediaQuery } from "@mantine/hooks";
 import ContactForm from './ContactForm';
 import AdDetail from '../../reusable/AdDetail';
 import { useFetchAdById } from '../../../hooks/useFetchAdById';
-import { useMediaQuery } from "@mantine/hooks";
 
 
-export default function AdDetailPage() {
+function AdDetailPage() {
   const { id } = useParams();
   const { ad, isLoading, errorMessage} = useFetchAdById(id);
   const isSmallTablet = useMediaQuery(`(max-width: 780px)`);
@@ -26,7 +25,6 @@ export default function AdDetailPage() {
     )
   }
 
-
-
+export default AdDetailPage
 
 

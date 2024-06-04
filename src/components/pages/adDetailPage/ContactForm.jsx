@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import { TextInput, Stack, Textarea, Fieldset, Button, Group, Loader } from '@mantine/core';
+import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import ResultAlert from '../../reusable/ResultAlert';
 
 
@@ -24,16 +24,13 @@ function ContactForm( { isSmallTablet, adName, adCreatedAt, adId }) {
       });
 
     function formatDate(date) {
-    return new Date(date).toLocaleDateString("ch-DE", {day: "numeric", month: "long", year: "numeric"})
+        return new Date(date).toLocaleDateString("ch-DE", {day: "numeric", month: "long", year: "numeric"})
     }
 
     function sendContactEmail(values) {
         const {name: formName, email: formEmail, message: formMessage} = values;
-
         setErrMessage("");
         setEmailWasSent(false);
-
-
         async function postRequest() {
             try {
             setIsLoading(true);
@@ -64,18 +61,18 @@ function ContactForm( { isSmallTablet, adName, adCreatedAt, adId }) {
     }
 
     return (
-        <>
         <Stack style={isSmallTablet ? {} : {flex: "1 1 0", width: "0"}}>
-        {isLoading && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
-        {errMessage && !emailWasSent && <ResultAlert title="Etwas ist schief gelaufen" icon="error" message={`Deine Nachricht an ${adName} konnte nicht gesendet werden. Bitte versuche es noch einmal`} wasSuccessful={false}></ResultAlert>}
-        {!errMessage && emailWasSent && <ResultAlert title="Versendet" icon="mail" message={`Deine Nachricht wurde an ${adName} gesendet.`} wasSuccessful={true} />}
-        {!errMessage && !emailWasSent && !isLoading &&
+            {isLoading && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
+            {errMessage && !emailWasSent && <ResultAlert title="Etwas ist schief gelaufen" icon="error" message={`Deine Nachricht an ${adName} konnte nicht gesendet werden. Bitte versuche es noch einmal`} wasSuccessful={false}></ResultAlert>}
+            {!errMessage && emailWasSent && <ResultAlert title="Versendet" icon="mail" message={`Deine Nachricht wurde an ${adName} gesendet.`} wasSuccessful={true} />}
+            {!errMessage && !emailWasSent && !isLoading &&
              <form onSubmit={form.onSubmit(
                 (values) => {
                 sendContactEmail(values);
                 })
             }>
                 <Fieldset legend="Kontakt aufnehmen">
+                    
                     <TextInput
                     withAsterisk
                     label="Name"
@@ -108,10 +105,7 @@ function ContactForm( { isSmallTablet, adName, adCreatedAt, adId }) {
                 </Fieldset>
             </form> }
         </Stack>
-
-        </>
     )
-
   }
 
 export default ContactForm

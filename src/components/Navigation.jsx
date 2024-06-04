@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Flex, Image, Title, Group, Text, ActionIcon, HoverCard } from '@mantine/core';
 import { IconEdit } from "@tabler/icons-react";
 

@@ -1,12 +1,12 @@
-
 import { useState } from "react";
 import { TextInput, MultiSelect, Loader, Card, Radio, NativeSelect, Fieldset, Button, Group, Textarea, Flex } from '@mantine/core';
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
+import socket from "./../../../../socket.js"
 import { cantons, instrumentsAdCreation as instruments, styles} from "../../../../data/data.js";
 import RadioImages from "./../../../reusable/RadioImages.jsx";
 import ResultAlert from "../../../reusable/ResultAlert.jsx";
 import AdDetail from "../../../reusable/AdDetail.jsx";
-import socket from "./../../../../socket.js"
+
 
 
 function CreateAd() {
@@ -92,7 +92,6 @@ function CreateAd() {
               code
             })
           })
-          //const body = await response.json();
           if (!response.ok) {
             throw new Error("Etwas ist schief gelaufen beim Versenden des Code-Emails")
           }
@@ -108,106 +107,106 @@ function CreateAd() {
 
     return (
       <>
-      {isLoading && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
-      {!isLoading && errorMessage && <ResultAlert icon="error" message={errorMessage} wasSuccessful={false} />}
-      {!isLoading && ad && <ResultAlert title={`Dein Inserate-Code: ${ad.code}`} icon="notification" message={`Dein Inserat wurde erstellt. Benutze diesen Inserate-Code zum Ändern oder Löschen des Inserats.`} wasSuccessful={true} />}
-      
-      {isLoadingEmail && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
-      {!isLoadingEmail && ad && emailWasSent && <ResultAlert title="Email versendet" icon="mail" message="Eine Email mit deinem Inserate-Code wurde soeben an deine Email-Adresse gesendet" wasSuccessful={true}></ResultAlert>}
+        {isLoading && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
+        {!isLoading && errorMessage && <ResultAlert icon="error" message={errorMessage} wasSuccessful={false} />}
+        {!isLoading && ad && <ResultAlert title={`Dein Inserate-Code: ${ad.code}`} icon="notification" message={`Dein Inserat wurde erstellt. Benutze diesen Inserate-Code zum Ändern oder Löschen des Inserats.`} wasSuccessful={true} />}
+        
+        {isLoadingEmail && <Loader color="var(--mantine-color-dark-2)" size="xl"/>}
+        {!isLoadingEmail && ad && emailWasSent && <ResultAlert title="Email versendet" icon="mail" message="Eine Email mit deinem Inserate-Code wurde soeben an deine Email-Adresse gesendet" wasSuccessful={true}></ResultAlert>}
 
-      {!isLoading && ad && <Card><AdDetail ad={ad}/></Card>}
+        {!isLoading && ad && <Card><AdDetail ad={ad}/></Card>}
 
 
-      {!ad && !isLoading && 
-        <form onSubmit={form.onSubmit(
-            (values) => {
-            createAd(values);
-            })
-           }>
-            <Fieldset disabled={isLoading && true} >  
-              <TextInput mb="xs"
-                withAsterisk
-                label="E-Mail"
-                description="Deine E-Mail-Adresse"
-                placeholder="master-of-noise@gmail.com"
-                error="Ungültige E-Mail-Adresse"
-                key={form.key("email")}
-                {...form.getInputProps("email")}
-              />
+        {!ad && !isLoading && 
+          <form onSubmit={form.onSubmit(
+              (values) => {
+              createAd(values);
+              })
+            }>
+              <Fieldset disabled={isLoading && true} >  
+                <TextInput mb="xs"
+                  withAsterisk
+                  label="E-Mail"
+                  description="Deine E-Mail-Adresse"
+                  placeholder="master-of-noise@gmail.com"
+                  error="Ungültige E-Mail-Adresse"
+                  key={form.key("email")}
+                  {...form.getInputProps("email")}
+                />
 
-              <TextInput mb="xs"
-                withAsterisk
-                label="Bandname"
-                description="Wie heisst ihr?"
-                placeholder="The evil brothers"
-                key={form.key("bandname")}
-                {...form.getInputProps("bandname")}
-              />
+                <TextInput mb="xs"
+                  withAsterisk
+                  label="Bandname"
+                  description="Wie heisst ihr?"
+                  placeholder="The evil brothers"
+                  key={form.key("bandname")}
+                  {...form.getInputProps("bandname")}
+                />
 
-              <Textarea mb="xs"
-                label="Inserate-Text"
-                description="Beschreibe wer ihr seid und was ihr sucht"
-                placeholder="Wir sind böse, komm zu uns!"
-                autosize
-                minRows={3}
-                maxRows={8}
-                withAsterisk
-                key={form.key("beschreibung")}
-                {...form.getInputProps("beschreibung")}
-              />
-              
-              <MultiSelect mb="xs"
-                label="Instrument" 
-                description="Wähle mindestens 1 und maximal 4 Instrumente"
-                maxValues={4}
-                withAsterisk
-                searchable
-                hidePickedOptions
-                data={instruments}
-                key={form.key("instrument")}
-                {...form.getInputProps("instrument")}
-              ></MultiSelect>
+                <Textarea mb="xs"
+                  label="Inserate-Text"
+                  description="Beschreibe wer ihr seid und was ihr sucht"
+                  placeholder="Wir sind böse, komm zu uns!"
+                  autosize
+                  minRows={3}
+                  maxRows={8}
+                  withAsterisk
+                  key={form.key("beschreibung")}
+                  {...form.getInputProps("beschreibung")}
+                />
+                
+                <MultiSelect mb="xs"
+                  label="Instrument" 
+                  description="Wähle mindestens 1 und maximal 4 Instrumente"
+                  maxValues={4}
+                  withAsterisk
+                  searchable
+                  hidePickedOptions
+                  data={instruments}
+                  key={form.key("instrument")}
+                  {...form.getInputProps("instrument")}
+                ></MultiSelect>
 
-              <NativeSelect mb="xs"
-                label="Kanton"
-                description="Wähle einen Kanton"
-                data={cantons}
-                withAsterisk
-                key={form.key("canton")}
-                {...form.getInputProps("canton")}
-              />
+                <NativeSelect mb="xs"
+                  label="Kanton"
+                  description="Wähle einen Kanton"
+                  data={cantons}
+                  withAsterisk
+                  key={form.key("canton")}
+                  {...form.getInputProps("canton")}
+                />
 
-              <MultiSelect mb="xs"
-                label="Stil"
-                description="Wähle mindestens 1 und maximal 4 Style-Tags aus"
-                data={styles}
-                maxValues={4}
-                searchable
-                withAsterisk
-                hidePickedOptions
-                key={form.key("style")}
-                {...form.getInputProps("style")}
-              />
+                <MultiSelect mb="xs"
+                  label="Stil"
+                  description="Wähle mindestens 1 und maximal 4 Style-Tags aus"
+                  data={styles}
+                  maxValues={4}
+                  searchable
+                  withAsterisk
+                  hidePickedOptions
+                  key={form.key("style")}
+                  {...form.getInputProps("style")}
+                />
 
-              <Radio.Group mb="xs"
-                label="Bild"
-                mt="0px"
-                withAsterisk
-                description="Wähle ein Bild für dein Inserat"
-                justify="flex-start"
-                key={form.key("image")}
-                {...form.getInputProps("image")}
-              >
-                  <Flex mt="0px" wrap="wrap" >
-                    {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
-                  </Flex>
-              </Radio.Group> 
+                <Radio.Group mb="xs"
+                  label="Bild"
+                  mt="0px"
+                  withAsterisk
+                  description="Wähle ein Bild für dein Inserat"
+                  justify="flex-start"
+                  key={form.key("image")}
+                  {...form.getInputProps("image")}
+                >
+                    <Flex mt="0px" wrap="wrap" >
+                      {pictureNumbers.map(num => <RadioImages number={num} key={num} />)}
+                    </Flex>
+                </Radio.Group> 
 
-              <Group justify="flex-start" mt="md">
-                  <Button type="submit">Inserat erstellen</Button>
-              </Group> 
-            </Fieldset>  
-        </form>}
+                <Group justify="flex-start" mt="md">
+                    <Button type="submit">Inserat erstellen</Button>
+                </Group> 
+              </Fieldset>  
+          </form>}
       </>
     )
 }

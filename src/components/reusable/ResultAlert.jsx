@@ -2,9 +2,7 @@ import { Alert } from '@mantine/core';
 import { IconMail, IconNotification, IconExclamationCircle, IconCheckbox } from "@tabler/icons-react";
 
 function ResultAlert( { title, message, wasSuccessful, icon } ) {
-/*     if (icon === "mail") {
-        const usedIcon = iconMail;
-    } */
+
     return (
         <Alert 
             title={title} 
@@ -16,7 +14,6 @@ function ResultAlert( { title, message, wasSuccessful, icon } ) {
             }
             color={wasSuccessful ? "green" : "red"}
         >
-
             {message}
         </Alert>
     )

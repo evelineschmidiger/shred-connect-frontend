@@ -15,11 +15,10 @@ function AdPagination({ setPaginationQuery, adTotal, filterQuery}) {
         setPaginationQuery(query);
     }, [activePage, setPaginationQuery])
 
-    // Bugfix: when on page 9 and new Filter shows less ads -> skip to page 1
+    // When on page 9 and new Filter shows less ads -> skip to page 1
     useEffect(() => {
         setActivePage(1);
     }, [filterQuery])
-
 
     return (!hasOnlyOnePage && <Pagination size={isMobile? "xs" : "md"} gap={isMobile? "3": "10"} total={Math.ceil(adTotal / adsPerPage)} value={activePage} onChange={setActivePage}/>);
 }

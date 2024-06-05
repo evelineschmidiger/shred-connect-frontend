@@ -55,7 +55,7 @@ function CreateAd() {
           setIsLoading(true);
           setErrorMessage("");
           setAd("")
-          const response = await fetch("http://localhost:7777/api/adverts", {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/adverts`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(bodyObject)
@@ -84,7 +84,7 @@ function CreateAd() {
       async function postRequest() {
         try {
           setIsLoadingEmail(true);
-          const response = await fetch("http://localhost:7777/api/adverts/sendCode", {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/adverts/sendCode`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({

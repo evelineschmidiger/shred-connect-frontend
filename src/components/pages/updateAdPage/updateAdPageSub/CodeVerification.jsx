@@ -25,7 +25,7 @@ function CodeVerification( { setAd, setAdId }) {
           try {
             setIsLoading(true);
             setErrorMessage("");
-            const res = await fetch(`http://localhost:7777/api/adverts?code=${code}`);
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/adverts?code=${code}`);
             const data = await res.json();
             // if res.ok false - keine abfrage, try again
             // if data.result = 0 -> kein inserat gefunden, nochmal versuchen

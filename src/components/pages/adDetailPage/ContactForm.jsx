@@ -34,7 +34,7 @@ function ContactForm( { isSmallTablet, adName, adCreatedAt, adId }) {
         async function postRequest() {
             try {
             setIsLoading(true);
-            const response = await fetch(`http://localhost:7777/api/adverts/${adId}/contact`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/adverts/${adId}/contact`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({

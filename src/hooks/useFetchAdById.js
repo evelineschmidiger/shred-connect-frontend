@@ -13,7 +13,7 @@ export function useFetchAdById(id) {
             setIsLoading(true);
             setErrorMessage("");
           
-            const res = await fetch(`http://localhost:7777/api/adverts/${id}`, {signal: controller.signal});
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/adverts/${id}`, {signal: controller.signal});
             if(!res.ok) throw new Error("Etwas ist schiefgelaufen beim Laden des Inserats");
             const data = await res.json();
             if(!data.data.ad) throw new Error("Kein Inserat gefunden")

@@ -13,7 +13,7 @@ function DeleteAd( { id, setIsDeleted}) {
       async function deleteAdByID() {
         try {
           setIsLoading(true);
-          const res = await fetch(`http://localhost:7777/api/adverts/${id}`, {
+          const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/adverts/${id}`, {
             method: "DELETE",
             headers: {"Content-Type": "application/json"}
             });

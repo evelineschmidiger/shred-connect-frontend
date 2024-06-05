@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import { createTheme, MantineProvider, rem } from '@mantine/core';
-import { AppShell, Space, Group, Text, Button, Notification } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
+import { Button } from '@mantine/core';
 
 
 

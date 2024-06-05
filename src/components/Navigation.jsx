@@ -8,7 +8,7 @@ function Navigation() {
 
             <Link style={{textDecoration: "none", boxShadow: "none", color: "var(--mantine-color-blue-5)"}} to="/">
                 <Group gap="xs" wrap="nowrap" >
-                    <Image w="auto" fit="contain" h={30} src="/public/guitar1.svg">
+                    <Image w="auto" fit="contain" h={30} src="/guitar1.svg">
                     </Image>
                     <Title fz="1.2rem" fw={600} variant="gradient" gradient={{ from: "var(--mantine-color-blue-9)", to: "var(--mantine-color-teal-9)", deg: 90 }}>SHRED-CONNECT</Title>
                 </Group> 
